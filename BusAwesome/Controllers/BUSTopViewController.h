@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BUSTopViewController : UIViewController
+@interface BUSTopViewController : UINavigationController
 
 @end

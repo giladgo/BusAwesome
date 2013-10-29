@@ -32,13 +32,8 @@
 - (UIViewController*)navigateTo:(NSString*)storyboardName {
   [self dismissViewControllerAnimated:NO completion:nil];
   UIViewController *vc = [self viewFrom:storyboardName];
-  
-  /* wat
-  if ([vc conformsToProtocol:@protocol(TCPUsingTopController)]) {
-    ((UIViewController <TCPUsingTopController> *)vc).topController = self;
-  }*/
-  
-  [self presentViewController:vc animated:NO completion:nil];
+ 
+  [self pushViewController:vc animated:NO];
   return vc;
 }
 
