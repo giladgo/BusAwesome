@@ -23,6 +23,8 @@
 		94F871791820065800911620 /* Top.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F871781820065800911620 /* Top.storyboard */; };
 		94F8717C1820066600911620 /* BUSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8717B1820066600911620 /* BUSTopViewController.m */; };
 		94F8717F1820066F00911620 /* UIViewController+IICNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8717E1820066F00911620 /* UIViewController+IICNavigator.m */; };
+		94F871811820073600911620 /* RouteList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F871801820073600911620 /* RouteList.storyboard */; };
+		94F871851820077E00911620 /* BUSRouteListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F871841820077E00911620 /* BUSRouteListVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,9 @@
 		94F8717B1820066600911620 /* BUSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTopViewController.m; path = Controllers/BUSTopViewController.m; sourceTree = "<group>"; };
 		94F8717D1820066F00911620 /* UIViewController+IICNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+IICNavigator.h"; path = "Lib/UIViewController+IICNavigator.h"; sourceTree = "<group>"; };
 		94F8717E1820066F00911620 /* UIViewController+IICNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+IICNavigator.m"; path = "Lib/UIViewController+IICNavigator.m"; sourceTree = "<group>"; };
+		94F871801820073600911620 /* RouteList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = RouteList.storyboard; path = Views/RouteList/RouteList.storyboard; sourceTree = "<group>"; };
+		94F871831820077E00911620 /* BUSRouteListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSRouteListVC.h; path = Controllers/RouteList/BUSRouteListVC.h; sourceTree = "<group>"; };
+		94F871841820077E00911620 /* BUSRouteListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSRouteListVC.m; path = Controllers/RouteList/BUSRouteListVC.m; sourceTree = "<group>"; };
 		B96AF36E1EDE4161A3CFDE60 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +96,7 @@
 			children = (
 				94F8717A1820066600911620 /* BUSTopViewController.h */,
 				94F8717B1820066600911620 /* BUSTopViewController.m */,
+				94F871861820078200911620 /* RouteList */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -183,8 +189,26 @@
 			isa = PBXGroup;
 			children = (
 				94F871781820065800911620 /* Top.storyboard */,
+				94F871821820074600911620 /* RouteList */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		94F871821820074600911620 /* RouteList */ = {
+			isa = PBXGroup;
+			children = (
+				94F871801820073600911620 /* RouteList.storyboard */,
+			);
+			name = RouteList;
+			sourceTree = "<group>";
+		};
+		94F871861820078200911620 /* RouteList */ = {
+			isa = PBXGroup;
+			children = (
+				94F871831820077E00911620 /* BUSRouteListVC.h */,
+				94F871841820077E00911620 /* BUSRouteListVC.m */,
+			);
+			name = RouteList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +292,7 @@
 			files = (
 				94B04432181FF7A200D3E15B /* Images.xcassets in Resources */,
 				94B04424181FF7A200D3E15B /* InfoPlist.strings in Resources */,
+				94F871811820073600911620 /* RouteList.storyboard in Resources */,
 				94F871791820065800911620 /* Top.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,6 +348,7 @@
 				94B04426181FF7A200D3E15B /* main.m in Sources */,
 				94B0442A181FF7A200D3E15B /* BUSAppDelegate.m in Sources */,
 				94F8717F1820066F00911620 /* UIViewController+IICNavigator.m in Sources */,
+				94F871851820077E00911620 /* BUSRouteListVC.m in Sources */,
 				94F8717C1820066600911620 /* BUSTopViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

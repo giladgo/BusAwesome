@@ -45,7 +45,7 @@
 
 - (void) goToLineList
 {
-  [self navigateTo:@"LineList"];
+  [self navigateTo:@"RouteList"];
 }
 
 @end
