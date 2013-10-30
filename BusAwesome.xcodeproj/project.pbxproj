@@ -14,6 +14,7 @@
 		6631186F18210E6400993AF6 /* BUSStop.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631186E18210E6400993AF6 /* BUSStop.m */; };
 		6631187218210E8000993AF6 /* BUSPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631187118210E8000993AF6 /* BUSPath.m */; };
 		6631187618211EC500993AF6 /* BUSGTFSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631187518211EC500993AF6 /* BUSGTFSService.m */; };
+		6688466318213CAC000D3457 /* BUSRouteListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688466218213CAC000D3457 /* BUSRouteListCell.m */; };
 		94B0441A181FF7A200D3E15B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B04419181FF7A200D3E15B /* Foundation.framework */; };
 		94B0441C181FF7A200D3E15B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B0441B181FF7A200D3E15B /* CoreGraphics.framework */; };
 		94B0441E181FF7A200D3E15B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B0441D181FF7A200D3E15B /* UIKit.framework */; };
@@ -60,6 +61,8 @@
 		6631187118210E8000993AF6 /* BUSPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSPath.m; path = Models/BUSPath.m; sourceTree = "<group>"; };
 		6631187418211EC500993AF6 /* BUSGTFSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSGTFSService.h; path = Services/BUSGTFSService.h; sourceTree = "<group>"; };
 		6631187518211EC500993AF6 /* BUSGTFSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSGTFSService.m; path = Services/BUSGTFSService.m; sourceTree = "<group>"; };
+		6688466118213CAC000D3457 /* BUSRouteListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSRouteListCell.h; path = Views/RouteList/BUSRouteListCell.h; sourceTree = "<group>"; };
+		6688466218213CAC000D3457 /* BUSRouteListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSRouteListCell.m; path = Views/RouteList/BUSRouteListCell.m; sourceTree = "<group>"; };
 		6A09F377CEFF47639D70D6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B04416181FF7A200D3E15B /* BusAwesome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusAwesome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B04419181FF7A200D3E15B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -257,6 +260,8 @@
 			isa = PBXGroup;
 			children = (
 				94F871801820073600911620 /* RouteList.storyboard */,
+				6688466118213CAC000D3457 /* BUSRouteListCell.h */,
+				6688466218213CAC000D3457 /* BUSRouteListCell.m */,
 			);
 			name = RouteList;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6688466318213CAC000D3457 /* BUSRouteListCell.m in Sources */,
 				94F8718E18210A0A00911620 /* BUSTripVC.m in Sources */,
 				94B04426181FF7A200D3E15B /* main.m in Sources */,
 				6631186618210E1200993AF6 /* BUSTrip.m in Sources */,

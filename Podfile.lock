@@ -23,9 +23,11 @@ PODS:
   - RKValueTransformers (1.0.0)
   - SOCKit (1.1)
   - TransitionKit (1.1.1)
+  - Underscore.m (0.2.1)
 
 DEPENDENCIES:
   - RestKit
+  - Underscore.m
 
 SPEC CHECKSUMS:
   AFNetworking: 0700ec7a58c36ad217173e167f6e4df7270df66b
@@ -34,5 +36,6 @@ SPEC CHECKSUMS:
   RKValueTransformers: 01dc043fd853f6e40459b2e732dff545298a0f91
   SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
   TransitionKit: d0e3344aac92991395d4c2e72d9c5a8ceeb12910
+  Underscore.m: 593ea54a19d3cc4439387a83d36eb7ba6ffd1707
 
 COCOAPODS: 0.25.0

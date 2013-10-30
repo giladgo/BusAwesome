@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BUSRouteListVC : UIViewController
-
+@interface BUSRouteListVC : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
