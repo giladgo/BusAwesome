@@ -36,7 +36,7 @@
 
 - (void) goToLineList
 {
-  [self navigateTo:@"RouteList"];
+  [self navigateTo:@"Trip"];
 }
 
 @end

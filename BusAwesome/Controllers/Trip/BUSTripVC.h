@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BUSTripVC : UIViewController
+@interface BUSTripVC : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

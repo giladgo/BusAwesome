@@ -33,6 +33,8 @@
 		94F871851820077E00911620 /* BUSRouteListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F871841820077E00911620 /* BUSRouteListVC.m */; };
 		94F8718E18210A0A00911620 /* BUSTripVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8718D18210A0A00911620 /* BUSTripVC.m */; };
 		94F8719118210A6800911620 /* Trip.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F8719018210A6800911620 /* Trip.storyboard */; };
+		94F8719418210C2A00911620 /* BUSStopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8719318210C2A00911620 /* BUSStopCell.m */; };
+		94F8719718212E3300911620 /* BUSStopWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8719618212E3300911620 /* BUSStopWidget.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,10 @@
 		94F8718C18210A0A00911620 /* BUSTripVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSTripVC.h; path = Controllers/Trip/BUSTripVC.h; sourceTree = "<group>"; };
 		94F8718D18210A0A00911620 /* BUSTripVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTripVC.m; path = Controllers/Trip/BUSTripVC.m; sourceTree = "<group>"; };
 		94F8719018210A6800911620 /* Trip.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Trip.storyboard; path = Views/Trip/Trip.storyboard; sourceTree = "<group>"; };
+		94F8719218210C2A00911620 /* BUSStopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSStopCell.h; path = Views/Trip/BUSStopCell.h; sourceTree = "<group>"; };
+		94F8719318210C2A00911620 /* BUSStopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSStopCell.m; path = Views/Trip/BUSStopCell.m; sourceTree = "<group>"; };
+		94F8719518212E3300911620 /* BUSStopWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSStopWidget.h; path = Views/Trip/BUSStopWidget.h; sourceTree = "<group>"; };
+		94F8719618212E3300911620 /* BUSStopWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSStopWidget.m; path = Views/Trip/BUSStopWidget.m; sourceTree = "<group>"; };
 		B96AF36E1EDE4161A3CFDE60 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -268,6 +274,10 @@
 			isa = PBXGroup;
 			children = (
 				94F8719018210A6800911620 /* Trip.storyboard */,
+				94F8719218210C2A00911620 /* BUSStopCell.h */,
+				94F8719318210C2A00911620 /* BUSStopCell.m */,
+				94F8719518212E3300911620 /* BUSStopWidget.h */,
+				94F8719618212E3300911620 /* BUSStopWidget.m */,
 			);
 			name = Trip;
 			sourceTree = "<group>";
@@ -424,7 +434,9 @@
 				94F8717F1820066F00911620 /* UIViewController+IICNavigator.m in Sources */,
 				6631187618211EC500993AF6 /* BUSGTFSService.m in Sources */,
 				6631187218210E8000993AF6 /* BUSPath.m in Sources */,
+				94F8719418210C2A00911620 /* BUSStopCell.m in Sources */,
 				94F871851820077E00911620 /* BUSRouteListVC.m in Sources */,
+				94F8719718212E3300911620 /* BUSStopWidget.m in Sources */,
 				94F8717C1820066600911620 /* BUSTopViewController.m in Sources */,
 				6631186F18210E6400993AF6 /* BUSStop.m in Sources */,
 				6631186C18210E4B00993AF6 /* BUSAgency.m in Sources */,
