@@ -22,6 +22,9 @@
   BUSGTFSService *service = [BUSGTFSService new];
   [service findTrips:@34.810998 withLongitude:@32.080251 withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.trips = trips;
+    [service getTripInfo:trips[0] withBlock:^(BUSTrip *trip) {
+      NSLog(@"Trip info %@", trip);
+    }];
     [self.tableView reloadData];
   }];
 }

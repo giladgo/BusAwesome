@@ -19,30 +19,8 @@
   }
   NSString *reqUrl = [NSString stringWithFormat:@"%@/trips?lat=%@&lon=%@", BUSA_SERVER_URL, lat, lon];
   NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]];
-
-  //Setting up related mappings (Trip has_one Route)
-  RKObjectMapping* agencyMapping = [RKObjectMapping mappingForClass:[BUSAgency class] ];
-  [agencyMapping addAttributeMappingsFromDictionary:@{
-                                                     @"id":   @"Id",
-                                                     @"name":     @"name"
-                                                     }];
   
-  //Setting up related mappings (Trip has_one Route)
-  RKObjectMapping* routeMapping = [RKObjectMapping mappingForClass:[BUSRoute class] ];
-  [routeMapping addAttributeMappingsFromDictionary:@{
-                                                @"id":   @"Id",
-                                                @"route_short_name":     @"shortName",
-                                                @"route_long_name":     @"longName",
-                                                @"route_desc":     @"routeDescription",
-                                                }];
-  [routeMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"agency" toKeyPath:@"agency" withMapping:agencyMapping]];
-  
-  RKObjectMapping *tripMapping = [RKObjectMapping mappingForClass:[BUSTrip class]];
-  [tripMapping addAttributeMappingsFromDictionary:@{
-                                                @"id":   @"Id",
-                                                @"shape_id":     @"shapeId"
-                                                }];
-  [tripMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"route" toKeyPath:@"route" withMapping:routeMapping]];
+  RKObjectMapping *tripMapping = [BUSTrip rkMapping];
   RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:tripMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
   RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:req responseDescriptors:@[responseDescriptor]];
   
@@ -51,4 +29,19 @@
   } failure:nil];
   [operation start];
 }
+
+- (void)getTripInfo:(BUSTrip *)trip withBlock:(void (^)(BUSTrip *))block {
+  NSString *reqUrl = [NSString stringWithFormat:@"%@/trips/%@", BUSA_SERVER_URL, trip.Id];
+  NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]];
+  
+  RKObjectMapping *tripMapping = [BUSTrip rkMapping];
+  RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:tripMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
+  RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:req responseDescriptors:@[responseDescriptor]];
+  
+  [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+    block((BUSTrip* )[result firstObject]);
+  } failure:nil];
+  [operation start];
+}
+
 @end

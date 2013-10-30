@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BUSAgency.h"
+#import "RestKit.h"
 
 @interface BUSRoute : NSObject
 @property (nonatomic) NSString *Id;
@@ -15,4 +16,6 @@
 @property (nonatomic) NSString *longName;
 @property (nonatomic) NSString *routeDescription;
 @property (nonatomic) BUSAgency *agency;
+
++(RKObjectMapping *)rkMapping;
 @end

@@ -7,7 +7,20 @@
 //
 
 #import "BUSStop.h"
+#import "BUSRoute.h"
 
 @implementation BUSStop
-
++ (RKObjectMapping *)rkMapping {
+  RKObjectMapping* stopMapping = [RKObjectMapping mappingForClass:[BUSStop class] ];
+  [stopMapping addAttributeMappingsFromDictionary:@{
+                                                     @"stop_id":   @"stopId",
+                                                     @"stop_sequence":     @"stopSequence",
+                                                     @"code":     @"code",
+                                                     @"name":     @"name",
+                                                     @"description":     @"description",
+                                                     @"lat":     @"lat",
+                                                     @"lon":     @"lon",
+                                                  }];
+  return stopMapping;
+}
 @end

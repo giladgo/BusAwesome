@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BUSRoute.h"
 #import "BUSPath.h"
+#import "RestKit.h"
 
 @interface BUSTrip : NSObject
 @property (nonatomic, copy) NSString *Id;
@@ -17,4 +18,6 @@
 @property (nonatomic) NSArray *stops;
 @property (nonatomic) BUSRoute *route;
 @property (nonatomic) BUSPath *path;
+
++(RKObjectMapping *)rkMapping;
 @end

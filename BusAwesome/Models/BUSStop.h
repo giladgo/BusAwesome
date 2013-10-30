@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RestKit.h"
 
 @interface BUSStop : NSObject
 
-@property (nonatomic) int stopId;
-@property (nonatomic) int stopSequnce;
-@property (nonatomic) int code;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *description;
-@property (nonatomic) float lat;
-@property (nonatomic) float lon;
+@property (nonatomic, copy) NSNumber* stopId;
+@property (nonatomic, copy) NSNumber* stopSequence;
+@property (nonatomic, copy) NSNumber* code;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSNumber *lat;
+@property (nonatomic, copy) NSNumber *lon;
 
++(RKObjectMapping *)rkMapping;
 @end

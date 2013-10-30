@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RestKit.h"
 
 @interface BUSPath : NSObject
+@property (nonatomic, copy) NSNumber *Id;
+@property (nonatomic, copy) NSNumber *shapeId;
+@property (nonatomic, copy) NSString *pathWKT;
 
++(RKObjectMapping *)rkMapping;
 @end
