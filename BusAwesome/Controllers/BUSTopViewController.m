@@ -26,9 +26,6 @@
   }
 }
 
-
-
-
 - (UIViewController*)navigateTo:(NSString*)storyboardName {
   [self dismissViewControllerAnimated:NO completion:nil];
   UIViewController *vc = [self viewFrom:storyboardName];
@@ -36,7 +33,6 @@
   [self pushViewController:vc animated:NO];
   return vc;
 }
-
 
 - (void) goToLineList
 {
