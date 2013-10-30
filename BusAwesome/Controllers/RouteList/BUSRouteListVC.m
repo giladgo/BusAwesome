@@ -7,11 +7,19 @@
 //
 
 #import "BUSRouteListVC.h"
+#import "BUSGTFSService.h"
 
 @interface BUSRouteListVC ()
 
 @end
 
 @implementation BUSRouteListVC
+
+- (void)viewDidLoad {
+  BUSGTFSService *service = [BUSGTFSService new];
+  [service findTrips:@34.810998 withLongitude:@32.080251 withRadiusInMeters:nil withBlock:^(NSArray *trips) {
+    NSLog(@"The trips: %@", trips);
+  }];
+}
 
 @end
