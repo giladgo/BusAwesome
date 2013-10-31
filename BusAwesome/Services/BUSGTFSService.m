@@ -10,7 +10,7 @@
 #import "BUSTrip.h"
 #import <RestKit.h>
 
-#define BUSA_SERVER_URL @"http://127.0.0.1:3000"
+#define BUSA_SERVER_URL @"http://busa.dev"
 
 @implementation BUSGTFSService
 - (void)findTrips:(NSNumber *)lat withLongitude:(NSNumber *)lon withRadiusInMeters:(NSNumber *)radius withBlock:(void (^)(NSArray *))block {

@@ -24,9 +24,6 @@
   BUSGTFSService *service = [BUSGTFSService new];
   [service findTrips:@34.810998 withLongitude:@32.080251 withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.trips = trips;
-    [service getTripInfo:trips[0] withBlock:^(BUSTrip *trip) {
-      NSLog(@"Trip info %@", trip);
-    }];
     
     NSMutableDictionary *reduceResult = _.reduce(trips, [NSMutableDictionary new], ^(NSDictionary *memo, BUSTrip *trip) {
       NSMutableArray *currentElement = [memo objectForKey:trip.route.shortName];
@@ -46,12 +43,26 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RouteList" forIndexPath:indexPath];
+  BUSRouteListCell *cell = (BUSRouteListCell*)[tableView dequeueReusableCellWithIdentifier:@"RouteList" forIndexPath:indexPath];
   NSString *lineName = self.lines[[indexPath section]];
   NSArray *trips = [self.tripsByLines objectForKey:lineName];
   BUSTrip *trip = trips[[indexPath row]];
-  cell.textLabel.text = [NSString stringWithFormat:@"לכיוון %@", trip.destination];
+  cell.routeNameLabel.text = [NSString stringWithFormat:@"לכיוון %@", trip.destination];
   return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+  if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+    
+    UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView *) view;
+    tableViewHeaderFooterView.textLabel.textColor = [UIColor blueColor];
+  }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+  return 20;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

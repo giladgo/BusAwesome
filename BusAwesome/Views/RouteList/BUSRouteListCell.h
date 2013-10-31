@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface BUSRouteListCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *lineNumLabel;
-@property (weak, nonatomic) IBOutlet UILabel *lineDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *routeNameLabel;
 
 @end
