@@ -11,5 +11,5 @@
 
 @interface BUSGTFSService : NSObject
 -(void)findTrips:(NSNumber*)lat withLongitude:(NSNumber*)lon withRadiusInMeters:(NSNumber*)radius withBlock:(void (^)(NSArray *))block;
--(void)getTripInfo:(NSNumber*)tripId withBlock:(void (^)(BUSTrip *))block;
+-(void)getTripInfo:(NSString*)tripId withBlock:(void (^)(BUSTrip *))block;
 @end

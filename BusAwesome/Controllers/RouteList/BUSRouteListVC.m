@@ -6,9 +6,11 @@
 //  Copyright (c) 2013 Gilad Goldberg. All rights reserved.
 //
 
+#import "UIViewController+IICNavigator.h"
 #import "BUSRouteListVC.h"
 #import "BUSGTFSService.h"
 #import "BUSRouteListCell.h"
+#import "BUSTripVC.h"
 
 @interface BUSRouteListVC ()
 @property (nonatomic, strong) NSArray *trips;
@@ -78,6 +80,18 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   return self.lines[section];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  NSString *lineName = self.lines[indexPath.section];
+  NSArray *trips = [self.tripsByLines objectForKey:lineName];
+  BUSTrip *trip = trips[indexPath.row];
+  
+  BUSTripVC *vc = (BUSTripVC*)[self viewFrom:@"Trip"];
+  vc.tripId = trip.Id;
+  
+  [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

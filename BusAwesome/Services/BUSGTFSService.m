@@ -30,7 +30,7 @@
   [operation start];
 }
 
-- (void)getTripInfo:(NSNumber *)tripId withBlock:(void (^)(BUSTrip *))block {
+- (void)getTripInfo:(NSString *)tripId withBlock:(void (^)(BUSTrip *))block {
   NSString *reqUrl = [NSString stringWithFormat:@"%@/trips/%@", BUSA_SERVER_URL, tripId];
   NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]];
   

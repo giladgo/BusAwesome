@@ -11,4 +11,6 @@
 
 @interface BUSTripVC : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
+@property (strong, nonatomic) NSString *tripId;
+
 @end
