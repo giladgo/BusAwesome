@@ -56,6 +56,7 @@
   if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
     
     UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView *) view;
+    tableViewHeaderFooterView.textLabel.textAlignment = UITextAlignmentRight;
     tableViewHeaderFooterView.textLabel.textColor = [UIColor blueColor];
   }
 }
