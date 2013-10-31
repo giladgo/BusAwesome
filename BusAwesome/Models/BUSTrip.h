@@ -15,7 +15,9 @@
 @property (nonatomic, copy) NSString *Id;
 @property (nonatomic, copy) NSNumber *directionId;
 @property (nonatomic, copy) NSNumber *shapeId;
-@property (nonatomic) NSArray *stops;
+@property (nonatomic) NSString *origin;
+@property (nonatomic) NSString *destination;
+@property (nonatomic, strong) NSArray *stops;
 @property (nonatomic) BUSRoute *route;
 @property (nonatomic) BUSPath *path;
 

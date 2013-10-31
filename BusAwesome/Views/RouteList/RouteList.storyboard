@@ -21,38 +21,13 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RouteList" id="fAv-VY-Aj6" customClass="BUSRouteListCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RouteList" id="OX7-w9-gW9">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fAv-VY-Aj6" id="xzh-wl-VnI">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OX7-w9-gW9" id="Q2S-Ts-uJK">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWw-CY-smQ">
-                                                    <rect key="frame" x="270" y="11" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIT-Sb-00T">
-                                                    <rect key="frame" x="20" y="11" width="232" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="zWw-CY-smQ" firstAttribute="centerY" secondItem="xzh-wl-VnI" secondAttribute="centerY" id="0HA-Ax-Adi"/>
-                                                <constraint firstItem="zWw-CY-smQ" firstAttribute="baseline" secondItem="TIT-Sb-00T" secondAttribute="baseline" id="JvE-NC-IZw"/>
-                                                <constraint firstAttribute="trailing" secondItem="zWw-CY-smQ" secondAttribute="trailing" constant="8" id="cr9-lf-4FO"/>
-                                                <constraint firstItem="zWw-CY-smQ" firstAttribute="leading" secondItem="TIT-Sb-00T" secondAttribute="trailing" constant="18" id="jAb-My-8Gh"/>
-                                            </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="lineDescriptionLabel" destination="TIT-Sb-00T" id="a2V-zz-fMs"/>
-                                            <outlet property="lineNumLabel" destination="zWw-CY-smQ" id="9xc-hf-lFb"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -60,7 +35,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="OEV-Je-O57" id="ucb-W3-Adv"/>
+                        <outlet property="tableView" destination="OEV-Je-O57" id="pHV-R6-T9l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x0F-ui-rON" userLabel="First Responder" sceneMemberID="firstResponder"/>

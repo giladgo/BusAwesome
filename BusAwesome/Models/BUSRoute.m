@@ -28,4 +28,5 @@
   [routeMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"agency" toKeyPath:@"agency" withMapping:agencyMapping]];
   return routeMapping;
 }
+
 @end

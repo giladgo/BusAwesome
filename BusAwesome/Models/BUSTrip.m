@@ -16,7 +16,9 @@
   RKObjectMapping *tripMapping = [RKObjectMapping mappingForClass:[BUSTrip class]];
   [tripMapping addAttributeMappingsFromDictionary:@{
                                                     @"id":   @"Id",
-                                                    @"shape_id":     @"shapeId"
+                                                    @"shape_id":     @"shapeId",
+                                                    @"origin":     @"origin",
+                                                    @"destination":     @"destination"
                                                     }];
   [tripMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"path" toKeyPath:@"path" withMapping:[BUSPath rkMapping]]];
   [tripMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"route" toKeyPath:@"route" withMapping:[BUSRoute rkMapping]]];
@@ -35,4 +37,5 @@
   
   return -1.0;
 }
+
 @end
