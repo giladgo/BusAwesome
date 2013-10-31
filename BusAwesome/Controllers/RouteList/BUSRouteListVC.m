@@ -24,10 +24,13 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
   for (CLLocation* location in locations) {
-    [self updateTrips:location.coordinate];
+    if (location.horizontalAccuracy <= 10.0 || location.verticalAccuracy <= 10.0) {
+      [self updateTrips:location.coordinate];
+      [self.locationManager stopUpdatingLocation];
+    }
     break;
   }
-  [self.locationManager stopUpdatingLocation];
+
 }
 
 - (void)viewDidLoad {
@@ -47,8 +50,11 @@
 
 -(void)updateTrips:(CLLocationCoordinate2D)coordinate {
   BUSGTFSService *service = [BUSGTFSService new];
-  NSNumber *lat = [[NSNumber alloc] initWithDouble:coordinate.latitude];
-  NSNumber *lon = [[NSNumber alloc] initWithDouble:coordinate.longitude];
+  
+  // TODO: due to error in server, we're reversing the lat/lon
+  NSNumber *lat =[[NSNumber alloc] initWithDouble:coordinate.longitude];
+  NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.latitude];
+
   [service findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.trips = trips;
     
