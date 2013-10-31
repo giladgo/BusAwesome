@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gilad Goldberg. All rights reserved.
 //
 
-#import <CoreLocation/CoreLocation.h>
+
 
 #import "BUSTripVC.h"
 #import "BUSStopCell.h"
@@ -19,17 +19,17 @@
 @property (nonatomic, strong) NSArray *stops;
 @property (nonatomic, strong) BUSTrip *trip;
 @property (nonatomic) int highlightStart;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
 @implementation BUSTripVC
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    // Custom initialization
+  for (CLLocation* location in locations) {
+    [self updateUIFromLocation:location.coordinate];
   }
-  return self;
 }
 
 - (void)viewDidLoad
@@ -37,6 +37,18 @@
   [super viewDidLoad];
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
+  
+  if ([CLLocationManager locationServicesEnabled]) {
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    self.locationManager.delegate = self;
+    [self.locationManager startUpdatingLocation];
+  }
+  else {
+    NSLog(@"Location services disabled.");
+  }
+  
+  
   
   [[BUSGTFSService new] getTripInfo:@(1051293810280913) withBlock:^(BUSTrip *trip) {
     self.trip = trip;
@@ -46,14 +58,6 @@
       stop.trip = trip;
     }
     
-    float myLat = 32.079183;
-    float myLon = 34.814622;
-    [self updateUIFromLocation:CLLocationCoordinate2DMake(myLat, myLon)];
-    
-    for (BUSStop *stop in self.stops) {
-      NSLog(@"%@ %@: %f", stop.name, stop.stopSequence, stop.projectionOnTrip);
-    }
-    
     [self.tableView reloadData];
   }];
 }
@@ -61,13 +65,20 @@
 - (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
 {
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
-  NSLog(@"myProjection: %f", myProjection);
   for (int i = 0; i < self.stops.count; i++) {
     BUSStop *stop = self.stops[i];
     if (stop.projectionOnTrip > myProjection) {
       self.highlightStart = i - 1;
       break;
     }
+  }
+}
+
+- (void)setHighlightStart:(int)highlightStart
+{
+  if (highlightStart != _highlightStart) {
+    _highlightStart = highlightStart;
+    [self.tableView reloadData];
   }
 }
 

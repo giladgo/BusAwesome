@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface BUSTripVC : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface BUSTripVC : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @end
