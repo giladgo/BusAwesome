@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface BUSRouteListVC : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface BUSRouteListVC : UIViewController<UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -16,15 +16,40 @@
 @property (nonatomic, strong) NSArray *trips;
 @property (nonatomic, strong) NSDictionary *tripsByLines;
 @property (nonatomic, strong) NSArray *lines;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
 @implementation BUSRouteListVC
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+  for (CLLocation* location in locations) {
+    [self updateTrips:location.coordinate];
+    break;
+  }
+  [self.locationManager stopUpdatingLocation];
+}
+
 - (void)viewDidLoad {
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
+  
+  if ([CLLocationManager locationServicesEnabled]) {
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    self.locationManager.delegate = self;
+    [self.locationManager startUpdatingLocation];
+  }
+  else {
+    NSLog(@"Location services disabled.");
+  }
+}
+
+-(void)updateTrips:(CLLocationCoordinate2D)coordinate {
   BUSGTFSService *service = [BUSGTFSService new];
-  [service findTrips:@34.810998 withLongitude:@32.080251 withRadiusInMeters:nil withBlock:^(NSArray *trips) {
+  NSNumber *lat = [[NSNumber alloc] initWithDouble:coordinate.latitude];
+  NSNumber *lon = [[NSNumber alloc] initWithDouble:coordinate.longitude];
+  [service findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.trips = trips;
     
     NSMutableDictionary *reduceResult = _.reduce(trips, [NSMutableDictionary new], ^(NSDictionary *memo, BUSTrip *trip) {
