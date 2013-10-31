@@ -9,6 +9,8 @@
 #import "BUSTrip.h"
 #import "BUSStop.h"
 
+#import <ShapeKit/ShapeKit.h>
+
 @implementation BUSTrip
 + (RKObjectMapping *)rkMapping {
   RKObjectMapping *tripMapping = [RKObjectMapping mappingForClass:[BUSTrip class]];
@@ -20,5 +22,17 @@
   [tripMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"route" toKeyPath:@"route" withMapping:[BUSRoute rkMapping]]];
   [tripMapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"stops" toKeyPath:@"stops" withMapping:[BUSStop rkMapping]]];
   return tripMapping;
+}
+
+- (float) projectPoint:(float)lat lon:(float)lon
+{
+  if (self.path.pathWKT) {
+    ShapeKitPolyline *polyLine = [[ShapeKitPolyline alloc] initWithWKT:self.path.pathWKT];
+    
+    ShapeKitPoint *pt = [[ShapeKitPoint alloc] initWithCoordinate:CLLocationCoordinate2DMake(lat, lon)];
+    return [polyLine normalizedDistanceFromOriginToProjectionOfPoint:pt];
+  }
+  
+  return -1.0;
 }
 @end

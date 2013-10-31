@@ -10,7 +10,7 @@
 #import "BUSTrip.h"
 #import <RestKit.h>
 
-#define BUSA_SERVER_URL @"http://busa.dev"
+#define BUSA_SERVER_URL @"http://127.0.0.1:3000"
 
 @implementation BUSGTFSService
 - (void)findTrips:(NSNumber *)lat withLongitude:(NSNumber *)lon withRadiusInMeters:(NSNumber *)radius withBlock:(void (^)(NSArray *))block {
@@ -30,8 +30,8 @@
   [operation start];
 }
 
-- (void)getTripInfo:(BUSTrip *)trip withBlock:(void (^)(BUSTrip *))block {
-  NSString *reqUrl = [NSString stringWithFormat:@"%@/trips/%@", BUSA_SERVER_URL, trip.Id];
+- (void)getTripInfo:(NSNumber *)tripId withBlock:(void (^)(BUSTrip *))block {
+  NSString *reqUrl = [NSString stringWithFormat:@"%@/trips/%@", BUSA_SERVER_URL, tripId];
   NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]];
   
   RKObjectMapping *tripMapping = [BUSTrip rkMapping];

@@ -15,6 +15,7 @@
 		6631187218210E8000993AF6 /* BUSPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631187118210E8000993AF6 /* BUSPath.m */; };
 		6631187618211EC500993AF6 /* BUSGTFSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631187518211EC500993AF6 /* BUSGTFSService.m */; };
 		6688466318213CAC000D3457 /* BUSRouteListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688466218213CAC000D3457 /* BUSRouteListCell.m */; };
+		947C9D5F1821453C00C7B008 /* BUSStop+TripProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */; };
 		94B0441A181FF7A200D3E15B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B04419181FF7A200D3E15B /* Foundation.framework */; };
 		94B0441C181FF7A200D3E15B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B0441B181FF7A200D3E15B /* CoreGraphics.framework */; };
 		94B0441E181FF7A200D3E15B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B0441D181FF7A200D3E15B /* UIKit.framework */; };
@@ -27,6 +28,7 @@
 		94B0443B181FF7A300D3E15B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B0441D181FF7A200D3E15B /* UIKit.framework */; };
 		94B04443181FF7A300D3E15B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94B04441181FF7A300D3E15B /* InfoPlist.strings */; };
 		94B04445181FF7A300D3E15B /* BusAwesomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94B04444181FF7A300D3E15B /* BusAwesomeTests.m */; };
+		94E0CCC9182264A6005F3FBF /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E0CCC8182264A6005F3FBF /* libstdc++.6.0.9.dylib */; };
 		94F871791820065800911620 /* Top.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F871781820065800911620 /* Top.storyboard */; };
 		94F8717C1820066600911620 /* BUSTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8717B1820066600911620 /* BUSTopViewController.m */; };
 		94F8717F1820066F00911620 /* UIViewController+IICNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F8717E1820066F00911620 /* UIViewController+IICNavigator.m */; };
@@ -64,6 +66,8 @@
 		6688466118213CAC000D3457 /* BUSRouteListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSRouteListCell.h; path = Views/RouteList/BUSRouteListCell.h; sourceTree = "<group>"; };
 		6688466218213CAC000D3457 /* BUSRouteListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSRouteListCell.m; path = Views/RouteList/BUSRouteListCell.m; sourceTree = "<group>"; };
 		6A09F377CEFF47639D70D6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		947C9D5D1821453C00C7B008 /* BUSStop+TripProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "BUSStop+TripProjection.h"; path = "Models/BUSStop+TripProjection.h"; sourceTree = "<group>"; };
+		947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "BUSStop+TripProjection.m"; path = "Models/BUSStop+TripProjection.m"; sourceTree = "<group>"; };
 		94B04416181FF7A200D3E15B /* BusAwesome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusAwesome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B04419181FF7A200D3E15B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94B0441B181FF7A200D3E15B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -80,6 +84,9 @@
 		94B04440181FF7A300D3E15B /* BusAwesomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BusAwesomeTests-Info.plist"; sourceTree = "<group>"; };
 		94B04442181FF7A300D3E15B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94B04444181FF7A300D3E15B /* BusAwesomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BusAwesomeTests.m; sourceTree = "<group>"; };
+		94E0CCC018225E5A005F3FBF /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		94E0CCC318225E81005F3FBF /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		94E0CCC8182264A6005F3FBF /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		94F871781820065800911620 /* Top.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Top.storyboard; path = Views/Top.storyboard; sourceTree = "<group>"; };
 		94F8717A1820066600911620 /* BUSTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSTopViewController.h; path = Controllers/BUSTopViewController.h; sourceTree = "<group>"; };
 		94F8717B1820066600911620 /* BUSTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTopViewController.m; path = Controllers/BUSTopViewController.m; sourceTree = "<group>"; };
@@ -103,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94E0CCC9182264A6005F3FBF /* libstdc++.6.0.9.dylib in Frameworks */,
 				94B0441C181FF7A200D3E15B /* CoreGraphics.framework in Frameworks */,
 				94B0441E181FF7A200D3E15B /* UIKit.framework in Frameworks */,
 				94B0441A181FF7A200D3E15B /* Foundation.framework in Frameworks */,
@@ -136,6 +144,8 @@
 				6631186E18210E6400993AF6 /* BUSStop.m */,
 				6631187018210E8000993AF6 /* BUSPath.h */,
 				6631187118210E8000993AF6 /* BUSPath.m */,
+				947C9D5D1821453C00C7B008 /* BUSStop+TripProjection.h */,
+				947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -183,6 +193,9 @@
 		94B04418181FF7A200D3E15B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94E0CCC8182264A6005F3FBF /* libstdc++.6.0.9.dylib */,
+				94E0CCC318225E81005F3FBF /* libc++.dylib */,
+				94E0CCC018225E5A005F3FBF /* libstdc++.dylib */,
 				94B04419181FF7A200D3E15B /* Foundation.framework */,
 				94B0441B181FF7A200D3E15B /* CoreGraphics.framework */,
 				94B0441D181FF7A200D3E15B /* UIKit.framework */,
@@ -441,6 +454,7 @@
 				6631187618211EC500993AF6 /* BUSGTFSService.m in Sources */,
 				6631187218210E8000993AF6 /* BUSPath.m in Sources */,
 				94F8719418210C2A00911620 /* BUSStopCell.m in Sources */,
+				947C9D5F1821453C00C7B008 /* BUSStop+TripProjection.m in Sources */,
 				94F871851820077E00911620 /* BUSRouteListVC.m in Sources */,
 				94F8719718212E3300911620 /* BUSStopWidget.m in Sources */,
 				94F8717C1820066600911620 /* BUSTopViewController.m in Sources */,
@@ -492,8 +506,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -531,8 +545,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -565,6 +579,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BusAwesome/BusAwesome-Prefix.pch";
 				INFOPLIST_FILE = "BusAwesome/BusAwesome-Info.plist";
@@ -579,6 +595,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BusAwesome/BusAwesome-Prefix.pch";
 				INFOPLIST_FILE = "BusAwesome/BusAwesome-Info.plist";

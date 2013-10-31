@@ -20,4 +20,6 @@
 @property (nonatomic) BUSPath *path;
 
 +(RKObjectMapping *)rkMapping;
+
+- (float) projectPoint:(float)lat lon:(float)lon;
 @end

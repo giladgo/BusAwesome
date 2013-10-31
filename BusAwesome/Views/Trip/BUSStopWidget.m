@@ -19,6 +19,12 @@
     return self;
 }
 
+- (void)setHighlightMode:(StopHighlightMode)highlightMode
+{
+  _highlightMode = highlightMode;
+  [self setNeedsDisplay];
+}
+
 #define HIGHLIGHT_COLOR 0.0,0.615686275,0.862745098
 
 

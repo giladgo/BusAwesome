@@ -1,7 +1,9 @@
 PODS:
   - AFNetworking (1.3.3)
+  - geos (3.3.8)
   - ISO8601DateFormatterValueTransformer (0.5.0):
     - RKValueTransformers (~> 1.0.0)
+  - proj4 (4.8.0)
   - RestKit (0.21.0):
     - RestKit/Core
   - RestKit/Core (0.21.0):
@@ -21,19 +23,26 @@ PODS:
   - RestKit/Support (0.21.0):
     - TransitionKit (= 1.1.1)
   - RKValueTransformers (1.0.0)
+  - ShapeKit (0.9.1):
+    - geos
+    - proj4
   - SOCKit (1.1)
   - TransitionKit (1.1.1)
   - Underscore.m (0.2.1)
 
 DEPENDENCIES:
   - RestKit
+  - ShapeKit
   - Underscore.m
 
 SPEC CHECKSUMS:
   AFNetworking: 0700ec7a58c36ad217173e167f6e4df7270df66b
+  geos: 77cb2c6d740e6170d7517f55f7a0f2ea12d9f120
   ISO8601DateFormatterValueTransformer: d0af1f50a9df42db72d7418db31938b8473e0af8
+  proj4: ed2f1de3bd3a8ed5896f55553429e8122aee2d21
   RestKit: c11a30e7bc73513d9d2c2695672aba7697d24181
   RKValueTransformers: 01dc043fd853f6e40459b2e732dff545298a0f91
+  ShapeKit: 50f539279057cdcee89aea6bd580072249c8753a
   SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
   TransitionKit: d0e3344aac92991395d4c2e72d9c5a8ceeb12910
   Underscore.m: 593ea54a19d3cc4439387a83d36eb7ba6ffd1707
