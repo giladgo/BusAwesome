@@ -34,7 +34,7 @@
 
 - (id)privateInit
 {
-#ifdef TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR
   self.locationManager = [[IICSimulatedLocationManager alloc] initWithKML:@"bus61"];
 #else
   self.locationManager = [[CLLocationManager alloc] init];

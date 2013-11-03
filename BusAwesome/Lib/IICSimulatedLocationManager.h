@@ -24,4 +24,3 @@
 - (id) initWithKML:(NSString *)kmlFile;
 
 @end
-g
