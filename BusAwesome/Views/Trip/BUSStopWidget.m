@@ -32,24 +32,14 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+  
   CGContextRef ctx = UIGraphicsGetCurrentContext();
   
 
   float radius = rect.size.height * 0.25f;
   CGPoint center = CGPointMake(rect.size.width / 2.0f, rect.size.height / 2.0f);
   
-  // Inner circle
-  if (self.highlightMode != StopHighlightModeNone) {
-    CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
-  }
-  else {
-    CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
-  }
-  CGContextSetLineWidth(ctx,4);
 
-  CGContextAddArc(ctx,center.x,center.y,radius,0.0,M_PI*2,YES);
-  CGContextStrokePath(ctx);
-  
   // Top Line
   if (self.highlightMode == StopHighlightModeStopAndTop) {
     CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
@@ -73,6 +63,19 @@
   CGContextMoveToPoint(ctx, center.x, center.y + radius);
   CGContextAddLineToPoint(ctx, center.x, rect.size.height);
   CGContextStrokePath(ctx);
+  
+  // Inner circle
+  if (self.highlightMode != StopHighlightModeNone) {
+    CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+  }
+  else {
+    CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
+  }
+  CGContextSetLineWidth(ctx,4);
+  
+  CGContextAddArc(ctx,center.x,center.y,radius,0.0,M_PI*2,YES);
+  CGContextStrokePath(ctx);
+  
 }
 
 @end
