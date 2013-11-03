@@ -32,7 +32,8 @@
 }
 
 + (void)getTripInfo:(NSString *)tripId withBlock:(void (^)(BUSTrip *))block {
-  NSString *reqUrl = [NSString stringWithFormat:@"%@/trips/%@", BUSA_SERVER_URL, tripId];
+  NSString *reqUrl = [NSString stringWithFormat:@"%@/trips/show?trip_id=%@", BUSA_SERVER_URL, tripId];
+  reqUrl = [reqUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
   NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]];
   
   RKObjectMapping *tripMapping = [BUSTrip rkMapping];

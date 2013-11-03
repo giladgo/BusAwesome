@@ -16,7 +16,6 @@
 #define SECTION_HEADER_HEIGHT 42
 
 @interface BUSRouteListVC ()
-@property (nonatomic, strong) NSArray *trips;
 @property (nonatomic, strong) NSDictionary *tripsByLines;
 @property (nonatomic, strong) NSArray *lines;
 @property (nonatomic, strong) NSDictionary *agencyColorsById;
@@ -50,8 +49,6 @@
   NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.latitude];
 
   [BUSGTFSService findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
-    self.trips = trips;
-    
     self.tripsByLines = _.reduce(trips, [NSMutableDictionary new], ^(NSDictionary *memo, BUSTrip *trip) {
       NSMutableArray *currentElement = [memo objectForKey:trip.route.shortName];
       if (!currentElement) {
