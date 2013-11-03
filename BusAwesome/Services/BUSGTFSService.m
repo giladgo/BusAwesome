@@ -11,11 +11,12 @@
 #import <RestKit.h>
 
 #define BUSA_SERVER_URL @"http://busa.dev"
+#define DEFAULT_RADIUS @100 //Radius in meters
 
 @implementation BUSGTFSService
 + (void)findTrips:(NSNumber *)lat withLongitude:(NSNumber *)lon withRadiusInMeters:(NSNumber *)radius withBlock:(void (^)(NSArray *))block {
   if(!radius) {
-    radius = @100;
+    radius = DEFAULT_RADIUS;
   }
   NSString *reqUrl = [NSString stringWithFormat:@"%@/trips?lat=%@&lon=%@", BUSA_SERVER_URL, lat, lon];
   NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]];
