@@ -8,6 +8,7 @@
 
 #import "BUSStopCell.h"
 #import "BUSStopWidget.h"
+#import <HexColor.h>
 
 @interface BUSStopCell()
 @property (weak, nonatomic) IBOutlet BUSStopWidget *stopWidget;
@@ -43,6 +44,13 @@
 {
   _highlightMode = highlightMode;
   self.stopWidget.highlightMode = highlightMode;
+  
+  if (_highlightMode != StopHighlightModeNone) {
+    self.backgroundColor = [UIColor colorWithHexString:@"ddeeff" alpha:1.0];
+  }
+  else {
+    self.backgroundColor = [UIColor whiteColor];
+  }
 }
 
 @end

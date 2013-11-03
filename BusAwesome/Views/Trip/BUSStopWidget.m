@@ -12,11 +12,12 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+  self = [super initWithFrame:frame];
+  if (self) {
+    // Initialization code
+    self.opaque = NO;
+  }
+  return self;
 }
 
 - (void)setHighlightMode:(StopHighlightMode)highlightMode
@@ -32,10 +33,10 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+  [super drawRect:rect];
   
   CGContextRef ctx = UIGraphicsGetCurrentContext();
   
-
   float radius = rect.size.height * 0.25f;
   CGPoint center = CGPointMake(rect.size.width / 2.0f, rect.size.height / 2.0f);
   
@@ -75,6 +76,7 @@
   
   CGContextAddArc(ctx,center.x,center.y,radius,0.0,M_PI*2,YES);
   CGContextStrokePath(ctx);
+  
   
 }
 
