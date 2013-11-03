@@ -7,6 +7,7 @@
 //
 
 #import "BUSLocationService.h"
+#import "IICSimulatedLocationManager.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -33,7 +34,11 @@
 
 - (id)privateInit
 {
+#ifdef TARGET_IPHONE_SIMULATOR
+  self.locationManager = [[IICSimulatedLocationManager alloc] initWithKML:@"bus61"];
+#else
   self.locationManager = [[CLLocationManager alloc] init];
+#endif
   self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation; // TODO: change this to ten meters
   self.locationManager.delegate = self;
   return self;

@@ -4,6 +4,7 @@ PODS:
   - HexColors (2.2.1)
   - ISO8601DateFormatterValueTransformer (0.5.0):
     - RKValueTransformers (~> 1.0.0)
+  - objective-zip (0.0.1)
   - proj4 (4.8.0)
   - RestKit (0.21.0):
     - RestKit/Core
@@ -27,7 +28,11 @@ PODS:
   - ShapeKit (0.9.1):
     - geos
     - proj4
+  - Simple-KML (0.1.0):
+    - objective-zip (= 0.0.1)
+    - TouchXML
   - SOCKit (1.1)
+  - TouchXML (0.1)
   - TransitionKit (1.1.1)
   - Underscore.m (0.2.1)
 
@@ -35,6 +40,7 @@ DEPENDENCIES:
   - HexColors
   - RestKit
   - ShapeKit
+  - Simple-KML
   - Underscore.m
 
 SPEC CHECKSUMS:
@@ -42,12 +48,15 @@ SPEC CHECKSUMS:
   geos: 77cb2c6d740e6170d7517f55f7a0f2ea12d9f120
   HexColors: 3a68db077cd6572a8f7d4aa1add284dd2436a934
   ISO8601DateFormatterValueTransformer: d0af1f50a9df42db72d7418db31938b8473e0af8
+  objective-zip: 36c878cd9831e1cef61a23d61081b3af1334fb6b
   proj4: ed2f1de3bd3a8ed5896f55553429e8122aee2d21
   RestKit: c11a30e7bc73513d9d2c2695672aba7697d24181
   RKValueTransformers: 01dc043fd853f6e40459b2e732dff545298a0f91
   ShapeKit: 50f539279057cdcee89aea6bd580072249c8753a
+  Simple-KML: e9e03cd29ea584aca39b4366eaa5f226e74bc6ec
   SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
+  TouchXML: 0fb977f0bdd2ce2e5d0790c80751769459708810
   TransitionKit: d0e3344aac92991395d4c2e72d9c5a8ceeb12910
   Underscore.m: 593ea54a19d3cc4439387a83d36eb7ba6ffd1707
 
-COCOAPODS: 0.25.0
+COCOAPODS: 0.26.2

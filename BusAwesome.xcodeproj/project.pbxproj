@@ -17,6 +17,8 @@
 		6688466318213CAC000D3457 /* BUSRouteListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688466218213CAC000D3457 /* BUSRouteListCell.m */; };
 		66BA17F018267FD400E4397E /* agency-colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66BA17EF18267FD400E4397E /* agency-colors.plist */; };
 		946FD0981826513E00ADD588 /* BUSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0971826513E00ADD588 /* BUSLocationService.m */; };
+		946FD0A618268EC100ADD588 /* IICSimulatedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */; };
+		946FD0A818269DFC00ADD588 /* bus61.kml in Resources */ = {isa = PBXBuildFile; fileRef = 946FD0A718269DFC00ADD588 /* bus61.kml */; };
 		947C9D5F1821453C00C7B008 /* BUSStop+TripProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */; };
 		94B0441A181FF7A200D3E15B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B04419181FF7A200D3E15B /* Foundation.framework */; };
 		94B0441C181FF7A200D3E15B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B0441B181FF7A200D3E15B /* CoreGraphics.framework */; };
@@ -71,6 +73,9 @@
 		6A09F377CEFF47639D70D6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		946FD0961826513E00ADD588 /* BUSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUSLocationService.h; sourceTree = "<group>"; };
 		946FD0971826513E00ADD588 /* BUSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BUSLocationService.m; sourceTree = "<group>"; };
+		946FD0A418268EC100ADD588 /* IICSimulatedLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IICSimulatedLocationManager.h; path = Lib/IICSimulatedLocationManager.h; sourceTree = "<group>"; };
+		946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IICSimulatedLocationManager.m; path = Lib/IICSimulatedLocationManager.m; sourceTree = "<group>"; };
+		946FD0A718269DFC00ADD588 /* bus61.kml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = bus61.kml; path = Resources/bus61.kml; sourceTree = "<group>"; };
 		947C9D5D1821453C00C7B008 /* BUSStop+TripProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "BUSStop+TripProjection.h"; path = "Models/BUSStop+TripProjection.h"; sourceTree = "<group>"; };
 		947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "BUSStop+TripProjection.m"; path = "Models/BUSStop+TripProjection.m"; sourceTree = "<group>"; };
 		94B04416181FF7A200D3E15B /* BusAwesome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BusAwesome.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +174,7 @@
 		66BA17EE18267FA500E4397E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				946FD0A718269DFC00ADD588 /* bus61.kml */,
 				66BA17EF18267FD400E4397E /* agency-colors.plist */,
 			);
 			name = Resources;
@@ -272,6 +278,8 @@
 			children = (
 				94F8717D1820066F00911620 /* UIViewController+IICNavigator.h */,
 				94F8717E1820066F00911620 /* UIViewController+IICNavigator.m */,
+				946FD0A418268EC100ADD588 /* IICSimulatedLocationManager.h */,
+				946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -410,6 +418,7 @@
 				66BA17F018267FD400E4397E /* agency-colors.plist in Resources */,
 				94F871811820073600911620 /* RouteList.storyboard in Resources */,
 				94F871791820065800911620 /* Top.storyboard in Resources */,
+				946FD0A818269DFC00ADD588 /* bus61.kml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +487,7 @@
 				94F8717C1820066600911620 /* BUSTopViewController.m in Sources */,
 				6631186F18210E6400993AF6 /* BUSStop.m in Sources */,
 				6631186C18210E4B00993AF6 /* BUSAgency.m in Sources */,
+				946FD0A618268EC100ADD588 /* IICSimulatedLocationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
