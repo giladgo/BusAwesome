@@ -89,15 +89,15 @@
   
   // Create label with section title
   UILabel *lineLabel = [UILabel new];
-  lineLabel.frame = CGRectMake(20, 6, 300, 30);
+  lineLabel.frame = CGRectMake(10, 6, 300, 30);
   lineLabel.backgroundColor = [UIColor clearColor];
   lineLabel.textColor = [UIColor whiteColor];
   lineLabel.textAlignment = UITextLayoutDirectionRight;
   lineLabel.font = [UIFont boldSystemFontOfSize:17];
-  lineLabel.text = aTrip.route.shortName;
+  lineLabel.text = [NSString stringWithFormat:@"קו %@", aTrip.route.shortName];
   
   UILabel *agencyLabel = [UILabel new];
-  agencyLabel.frame = CGRectMake(20, 6, 300, 30);
+  agencyLabel.frame = CGRectMake(10, 6, 300, 30);
   agencyLabel.backgroundColor = [UIColor clearColor];
   agencyLabel.textColor = [UIColor whiteColor];
   agencyLabel.textAlignment = UITextLayoutDirectionLeft;
