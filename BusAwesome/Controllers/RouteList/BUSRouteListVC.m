@@ -11,16 +11,22 @@
 #import "BUSGTFSService.h"
 #import "BUSRouteListCell.h"
 #import "BUSTripVC.h"
+#import <HexColor.h>
+
+#define SECTION_HEADER_HEIGHT 42
 
 @interface BUSRouteListVC ()
 @property (nonatomic, strong) NSArray *trips;
 @property (nonatomic, strong) NSDictionary *tripsByLines;
 @property (nonatomic, strong) NSArray *lines;
+@property (nonatomic, strong) NSDictionary *agencyColorsById;
 @end
 
 @implementation BUSRouteListVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
+  [self initAgencyColors];
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   
@@ -31,7 +37,14 @@
   }];
 }
 
--(void)updateTrips:(CLLocationCoordinate2D)coordinate {
+-(void)initAgencyColors
+{
+  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"agency-colors" ofType:@"plist"];
+  self.agencyColorsById = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+}
+
+-(void)updateTrips:(CLLocationCoordinate2D)coordinate
+{
   // TODO: due to error in server, we're reversing the lat/lon
   NSNumber *lat =[[NSNumber alloc] initWithDouble:coordinate.longitude];
   NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.latitude];
@@ -55,7 +68,8 @@
   }];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
   BUSRouteListCell *cell = (BUSRouteListCell*)[tableView dequeueReusableCellWithIdentifier:@"RouteList" forIndexPath:indexPath];
   NSString *lineName = self.lines[[indexPath section]];
   NSArray *trips = [self.tripsByLines objectForKey:lineName];
@@ -64,33 +78,56 @@
   return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-  if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
-    
-    UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView *) view;
-    tableViewHeaderFooterView.textLabel.textAlignment = NSTextAlignmentRight;
-    tableViewHeaderFooterView.textLabel.textColor = [UIColor blueColor];
-  }
+  NSString *lineName = self.lines[section];
+  NSArray *trips = self.tripsByLines[lineName];
+  BUSTrip *aTrip = trips[0];
+  NSString *agencyId = aTrip.route.agency.Id;
+  NSString *agencyHexColor = self.agencyColorsById[agencyId];
+  UIColor *agencyBGColor = [UIColor colorWithHexString:agencyHexColor alpha:1];
+  
+  // Create label with section title
+  UILabel *lineLabel = [UILabel new];
+  lineLabel.frame = CGRectMake(20, 6, 300, 30);
+  lineLabel.backgroundColor = [UIColor clearColor];
+  lineLabel.textColor = [UIColor whiteColor];
+  lineLabel.textAlignment = UITextLayoutDirectionRight;
+  lineLabel.font = [UIFont boldSystemFontOfSize:17];
+  lineLabel.text = aTrip.route.shortName;
+  
+  UILabel *agencyLabel = [UILabel new];
+  agencyLabel.frame = CGRectMake(20, 6, 300, 30);
+  agencyLabel.backgroundColor = [UIColor clearColor];
+  agencyLabel.textColor = [UIColor whiteColor];
+  agencyLabel.textAlignment = UITextLayoutDirectionLeft;
+  agencyLabel.font = [UIFont boldSystemFontOfSize:17];
+  agencyLabel.text = aTrip.route.agency.name;
+  
+  // Create header view and add label as a subview
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, SECTION_HEADER_HEIGHT)];
+  [view addSubview:lineLabel];
+  [view addSubview:agencyLabel];
+  view.backgroundColor = agencyBGColor;
+  
+  return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-  return 20;
+  return SECTION_HEADER_HEIGHT;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
   NSString *lineName = self.lines[section];
   NSArray *trips = [self.tripsByLines objectForKey:lineName];
   return trips.count;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
   return self.lines.count;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  return self.lines[section];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

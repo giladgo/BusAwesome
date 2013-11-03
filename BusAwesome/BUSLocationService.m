@@ -45,8 +45,8 @@
   
   if (self.singleLocationCallback) {
     [self stopUpdatingLocation];
-    
-    self.singleLocationCallback([locations firstObject]); // usually the first one is good enough
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:32.080251 longitude:34.810998];
+    self.singleLocationCallback(location); // usually the first one is good enough
     self.singleLocationCallback = nil;
   }
 }

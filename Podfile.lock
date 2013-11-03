@@ -1,6 +1,7 @@
 PODS:
   - AFNetworking (1.3.3)
   - geos (3.3.8)
+  - HexColors (2.2.1)
   - ISO8601DateFormatterValueTransformer (0.5.0):
     - RKValueTransformers (~> 1.0.0)
   - proj4 (4.8.0)
@@ -31,6 +32,7 @@ PODS:
   - Underscore.m (0.2.1)
 
 DEPENDENCIES:
+  - HexColors
   - RestKit
   - ShapeKit
   - Underscore.m
@@ -38,6 +40,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 0700ec7a58c36ad217173e167f6e4df7270df66b
   geos: 77cb2c6d740e6170d7517f55f7a0f2ea12d9f120
+  HexColors: 3a68db077cd6572a8f7d4aa1add284dd2436a934
   ISO8601DateFormatterValueTransformer: d0af1f50a9df42db72d7418db31938b8473e0af8
   proj4: ed2f1de3bd3a8ed5896f55553429e8122aee2d21
   RestKit: c11a30e7bc73513d9d2c2695672aba7697d24181

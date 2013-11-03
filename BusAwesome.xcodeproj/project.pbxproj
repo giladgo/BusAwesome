@@ -15,6 +15,7 @@
 		6631187218210E8000993AF6 /* BUSPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631187118210E8000993AF6 /* BUSPath.m */; };
 		6631187618211EC500993AF6 /* BUSGTFSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631187518211EC500993AF6 /* BUSGTFSService.m */; };
 		6688466318213CAC000D3457 /* BUSRouteListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688466218213CAC000D3457 /* BUSRouteListCell.m */; };
+		66BA17F018267FD400E4397E /* agency-colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66BA17EF18267FD400E4397E /* agency-colors.plist */; };
 		946FD0981826513E00ADD588 /* BUSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0971826513E00ADD588 /* BUSLocationService.m */; };
 		947C9D5F1821453C00C7B008 /* BUSStop+TripProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */; };
 		94B0441A181FF7A200D3E15B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B04419181FF7A200D3E15B /* Foundation.framework */; };
@@ -66,6 +67,7 @@
 		6631187518211EC500993AF6 /* BUSGTFSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSGTFSService.m; path = Services/BUSGTFSService.m; sourceTree = "<group>"; };
 		6688466118213CAC000D3457 /* BUSRouteListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSRouteListCell.h; path = Views/RouteList/BUSRouteListCell.h; sourceTree = "<group>"; };
 		6688466218213CAC000D3457 /* BUSRouteListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSRouteListCell.m; path = Views/RouteList/BUSRouteListCell.m; sourceTree = "<group>"; };
+		66BA17EF18267FD400E4397E /* agency-colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "agency-colors.plist"; path = "Resources/agency-colors.plist"; sourceTree = "<group>"; };
 		6A09F377CEFF47639D70D6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		946FD0961826513E00ADD588 /* BUSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUSLocationService.h; sourceTree = "<group>"; };
 		946FD0971826513E00ADD588 /* BUSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BUSLocationService.m; sourceTree = "<group>"; };
@@ -164,6 +166,14 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		66BA17EE18267FA500E4397E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				66BA17EF18267FD400E4397E /* agency-colors.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		945387AA1820036800E41D83 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +223,7 @@
 		94B0441F181FF7A200D3E15B /* BusAwesome */ = {
 			isa = PBXGroup;
 			children = (
+				66BA17EE18267FA500E4397E /* Resources */,
 				6631187318211E9200993AF6 /* Services */,
 				6631186318210DE600993AF6 /* Models */,
 				94F871761820062F00911620 /* Lib */,
@@ -396,6 +407,7 @@
 				94B04432181FF7A200D3E15B /* Images.xcassets in Resources */,
 				94F8719118210A6800911620 /* Trip.storyboard in Resources */,
 				94B04424181FF7A200D3E15B /* InfoPlist.strings in Resources */,
+				66BA17F018267FD400E4397E /* agency-colors.plist in Resources */,
 				94F871811820073600911620 /* RouteList.storyboard in Resources */,
 				94F871791820065800911620 /* Top.storyboard in Resources */,
 			);
