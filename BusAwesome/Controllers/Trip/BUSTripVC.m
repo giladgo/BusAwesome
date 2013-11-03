@@ -19,46 +19,44 @@
 @property (nonatomic, strong) NSArray *stops;
 @property (nonatomic, strong) BUSTrip *trip;
 @property (nonatomic) int highlightStart;
-@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) BUSStop *destinationStop;
 @end
 
 @implementation BUSTripVC
 
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-  for (CLLocation* location in locations) {
-    [self updateUIFromLocation:location.coordinate];
-  }
-}
-
 - (void)viewDidLoad
 {
   [super viewDidLoad];
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-  
-  if ([CLLocationManager locationServicesEnabled]) {
-    self.locationManager = [CLLocationManager new];
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
-  }
-  else {
-    NSLog(@"Location services disabled.");
-  }
-  
+ 
   [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
     self.trip = trip;
     self.stops = [trip.stops copy];
+    self.title = trip.route.shortName;
     
     for (BUSStop *stop in self.stops) {
       stop.trip = trip;
     }
     
     [self.tableView reloadData];
+    
+    [[BUSLocationService sharedInstance] startUpdatingLocation];
+    [BUSLocationService sharedInstance].delegate = self;
   }];
 }
+
+- (void) viewDidAppear:(BOOL)animated
+{
+  [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [super viewDidDisappear:animated];
+  [[BUSLocationService sharedInstance] stopUpdatingLocation];
+}
+
 
 - (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
 {
@@ -69,6 +67,17 @@
       self.highlightStart = i - 1;
       break;
     }
+    
+    if (self.destinationStop && stop.stopId == self.destinationStop.stopId) {
+      [self sendStopArrivalNotification];
+    }
+  }
+}
+
+- (void)didUpdateLocations:(NSArray *)locations
+{
+  for (CLLocation* location in locations) {
+    [self updateUIFromLocation:location.coordinate];
   }
 }
 
@@ -118,6 +127,39 @@
   }
   
   return nil;
+}
+
+- (void) sendStopArrivalNotification
+{
+  UILocalNotification *notification = [UILocalNotification new];
+  notification.alertBody = [NSString stringWithFormat:@"עוד מעט מגיעים ל%@!", self.destinationStop.name];
+  notification.soundName = UILocalNotificationDefaultSoundName;
+  [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+  
+  self.destinationStop = nil;
+}
+
+
+- (void)setDestinationStop:(BUSStop *)destinationStop
+{
+  if (destinationStop) {
+    [[BUSLocationService sharedInstance] startUpdatingLocation];
+  }
+  else {
+    [[BUSLocationService sharedInstance] stopUpdatingLocation];
+  }
+  _destinationStop = destinationStop;
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  self.destinationStop = nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  BUSStop *destinationStop = self.stops[indexPath.row];
+  self.destinationStop = destinationStop;
 }
 
 @end

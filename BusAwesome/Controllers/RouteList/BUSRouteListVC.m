@@ -16,36 +16,19 @@
 @property (nonatomic, strong) NSArray *trips;
 @property (nonatomic, strong) NSDictionary *tripsByLines;
 @property (nonatomic, strong) NSArray *lines;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 @end
 
 @implementation BUSRouteListVC
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-  for (CLLocation* location in locations) {
-    if (location.horizontalAccuracy <= 10.0 || location.verticalAccuracy <= 10.0) {
-      [self updateTrips:location.coordinate];
-      [self.locationManager stopUpdatingLocation];
-    }
-    break;
-  }
-
-}
 
 - (void)viewDidLoad {
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   
-  if ([CLLocationManager locationServicesEnabled]) {
-    self.locationManager = [CLLocationManager new];
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
-  }
-  else {
-    NSLog(@"Location services disabled.");
-  }
+  [[BUSLocationService sharedInstance] getCurrentLocation:^(CLLocation  *location) {
+    if (location.horizontalAccuracy <= 10.0 || location.verticalAccuracy <= 10.0) {
+      [self updateTrips:location.coordinate];
+    }
+  }];
 }
 
 -(void)updateTrips:(CLLocationCoordinate2D)coordinate {
@@ -86,7 +69,7 @@
   if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
     
     UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView *) view;
-    tableViewHeaderFooterView.textLabel.textAlignment = UITextAlignmentRight;
+    tableViewHeaderFooterView.textLabel.textAlignment = NSTextAlignmentRight;
     tableViewHeaderFooterView.textLabel.textColor = [UIColor blueColor];
   }
 }

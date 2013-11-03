@@ -10,7 +10,7 @@
 #import "BUSTrip.h"
 #import <RestKit.h>
 
-#define BUSA_SERVER_URL @"http://busa.dev"
+#define BUSA_SERVER_URL @"http://176.58.98.162:12334"
 #define DEFAULT_RADIUS @100 //Radius in meters
 
 @implementation BUSGTFSService

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreLocation/CoreLocation.h>
+#import "BUSLocationService.h"
 
-@interface BUSTripVC : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface BUSTripVC : UIViewController <UITableViewDataSource, UITableViewDelegate, BUSLocationServiceDelegate>
 
 @property (strong, nonatomic) NSString *tripId;
 
