@@ -21,13 +21,13 @@
 @end
 
 @implementation BUSLocationService
-static BUSLocationService *_sharedInstance;
 
 + (instancetype)sharedInstance
 {
-  if (!_sharedInstance) {
-    _sharedInstance = [[BUSLocationService alloc] privateInit];
-  }
+  static BUSLocationService *_sharedInstance;
+  static dispatch_once_t onceToken;
+  
+  dispatch_once(&onceToken, ^{ _sharedInstance = [[BUSLocationService alloc] privateInit]; });
   return _sharedInstance;
 }
 
