@@ -13,7 +13,7 @@
 #define BUSA_SERVER_URL @"http://busa.dev"
 
 @implementation BUSGTFSService
-- (void)findTrips:(NSNumber *)lat withLongitude:(NSNumber *)lon withRadiusInMeters:(NSNumber *)radius withBlock:(void (^)(NSArray *))block {
++ (void)findTrips:(NSNumber *)lat withLongitude:(NSNumber *)lon withRadiusInMeters:(NSNumber *)radius withBlock:(void (^)(NSArray *))block {
   if(!radius) {
     radius = @100;
   }
@@ -30,7 +30,7 @@
   [operation start];
 }
 
-- (void)getTripInfo:(NSString *)tripId withBlock:(void (^)(BUSTrip *))block {
++ (void)getTripInfo:(NSString *)tripId withBlock:(void (^)(BUSTrip *))block {
   NSString *reqUrl = [NSString stringWithFormat:@"%@/trips/%@", BUSA_SERVER_URL, tripId];
   NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]];
   

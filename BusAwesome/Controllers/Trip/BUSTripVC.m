@@ -48,7 +48,7 @@
     NSLog(@"Location services disabled.");
   }
   
-  [[BUSGTFSService new] getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
+  [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
     self.trip = trip;
     self.stops = [trip.stops copy];
     

@@ -49,16 +49,14 @@
 }
 
 -(void)updateTrips:(CLLocationCoordinate2D)coordinate {
-  BUSGTFSService *service = [BUSGTFSService new];
-  
   // TODO: due to error in server, we're reversing the lat/lon
   NSNumber *lat =[[NSNumber alloc] initWithDouble:coordinate.longitude];
   NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.latitude];
 
-  [service findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
+  [BUSGTFSService findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.trips = trips;
     
-    NSMutableDictionary *reduceResult = _.reduce(trips, [NSMutableDictionary new], ^(NSDictionary *memo, BUSTrip *trip) {
+    self.tripsByLines = _.reduce(trips, [NSMutableDictionary new], ^(NSDictionary *memo, BUSTrip *trip) {
       NSMutableArray *currentElement = [memo objectForKey:trip.route.shortName];
       if (!currentElement) {
         currentElement = [[NSMutableArray alloc] initWithArray:@[trip]];
@@ -69,7 +67,6 @@
       [memo setValue:currentElement forKey:trip.route.shortName];
       return memo;
     });
-    self.tripsByLines = reduceResult;
     self.lines = _.keys(self.tripsByLines);
     [self.tableView reloadData];
   }];
