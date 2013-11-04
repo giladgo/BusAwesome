@@ -35,11 +35,25 @@
   
   MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   hud.labelText = @"טוען קוים קרובים...";
+  
+  [self refresh:nil];
+  
+  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+  [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+  [self.tableView addSubview:refreshControl];
+}
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+  
   [[BUSLocationService sharedInstance] getCurrentLocation:^(CLLocation  *location) {
     if (location.horizontalAccuracy <= 10.0 || location.verticalAccuracy <= 10.0) {
       [self updateTrips:location.coordinate];
     }
   }];
+  
+  if (refreshControl) {
+    [refreshControl endRefreshing];
+  }
 }
 
 -(void)initAgencyColors
