@@ -106,7 +106,6 @@
 {
   if (highlightStart != _highlightStart) {
     _highlightStart = highlightStart;
-    NSLog(@"Reloading data due to highlight change");
     [self.tableView reloadData];
   }
 }
