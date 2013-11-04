@@ -39,6 +39,9 @@
   MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   hud.labelText = @"טוען תחנות...";
   
+  [BUSLocationService sharedInstance].delegate = self;
+  [self setupNotifications];
+  
   [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
     self.trip = trip;
     self.stops = [trip.stops copy];
@@ -55,46 +58,76 @@
         [self.tableView reloadData];
         
         [[BUSLocationService sharedInstance] startUpdatingLocation];
-        [BUSLocationService sharedInstance].delegate = self;
-
       });
     });
     
   }];
 }
 
+- (void) setupNotifications
+{
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(appHasGoneInBackground:)
+                                               name:UIApplicationDidEnterBackgroundNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(appWillGoToForeground:)
+                                               name:UIApplicationWillEnterForegroundNotification
+                                             object:nil];
+}
+
+- (void) teardownNotifications
+{
+  
+}
+
+- (void)appHasGoneInBackground:(NSNotification *)notification
+{
+  [[BUSLocationService sharedInstance] stopUpdatingLocation];
+}
+
+- (void)appWillGoToForeground:(NSNotification *)notification
+{
+  [[BUSLocationService sharedInstance] startUpdatingLocation];
+}
+
 - (void) viewDidAppear:(BOOL)animated
 {
-  [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+  [super viewDidAppear:animated];
+  
 }
+
+
 
 - (void)viewDidDisappear:(BOOL)animated
 {
   [super viewDidDisappear:animated];
-  [[BUSLocationService sharedInstance] stopUpdatingLocation];
+  [self teardownNotifications];
 }
 
 
 - (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
 {
+  NSLog(@"Got coordinate: %f, %f", coord.latitude, coord.latitude);
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
   
   for (int i = 0; i < self.stops.count; i++) {
     BUSStop *stop = self.stops[i];
     if (stop.projectionOnTrip > myProjection) {
       self.highlightStart = i - 1;
+      
+      if (self.destinationStop && stop.stopId == self.destinationStop.stopId) {
+        [self sendStopArrivalNotification];
+      }
+      
       break;
     }
-    
-    // Doing this here and not in the end of viewDidLoad because we want to
-    // hide the progress HUD only after the first location has arrived
-    // (and not when finished loading the stops)
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    
-    if (self.destinationStop && stop.stopId == self.destinationStop.stopId) {
-      [self sendStopArrivalNotification];
-    }
   }
+  
+  // Doing this here and not in the end of viewDidLoad because we want to
+  // hide the progress HUD only after the first location has arrived
+  // (and not when finished loading the stops)
+  [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 
 }
 
@@ -112,21 +145,25 @@
     int oldHiglightStart = _highlightStart;
     _highlightStart = highlightStart;
 
-    [self.tableView beginUpdates];
-    NSArray* indexesToUpdate = Underscore.array( @[
-                                 [NSIndexPath indexPathForRow:oldHiglightStart   inSection:0],
-                                 [NSIndexPath indexPathForRow:oldHiglightStart+1 inSection:0],
-                                 [NSIndexPath indexPathForRow:_highlightStart    inSection:0],
-                                 [NSIndexPath indexPathForRow:_highlightStart+1  inSection:0]
-                                 ]).uniq.unwrap;
+    if ([self.tableView numberOfRowsInSection:0]) {
+      [self.tableView beginUpdates];
+      NSArray* indexesToUpdate = Underscore.array( @[
+                                   [NSIndexPath indexPathForRow:oldHiglightStart   inSection:0],
+                                   [NSIndexPath indexPathForRow:oldHiglightStart+1 inSection:0],
+                                   [NSIndexPath indexPathForRow:_highlightStart    inSection:0],
+                                   [NSIndexPath indexPathForRow:_highlightStart+1  inSection:0]
+                                   ]).uniq.unwrap;
+      
+      [self.tableView reloadRowsAtIndexPaths:indexesToUpdate
+                            withRowAnimation:UITableViewRowAnimationNone];
+      [self.tableView endUpdates];
+      
+      [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_highlightStart inSection:0]
+                            atScrollPosition:UITableViewScrollPositionMiddle
+                                    animated:YES];
+    }
     
-    [self.tableView reloadRowsAtIndexPaths:indexesToUpdate
-                          withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
-    
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_highlightStart inSection:0]
-                          atScrollPosition:UITableViewScrollPositionMiddle
-                                  animated:YES];
+
 
   }
 }

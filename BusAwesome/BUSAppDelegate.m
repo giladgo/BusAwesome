@@ -25,7 +25,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-  [[BUSLocationService sharedInstance] stopUpdatingLocation];
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

@@ -46,10 +46,8 @@
 - (void)refresh:(UIRefreshControl *)refreshControl {
   
   [[BUSLocationService sharedInstance] getCurrentLocation:^(CLLocation  *location) {
-    if (location.horizontalAccuracy <= 10.0 || location.verticalAccuracy <= 10.0) {
-      [self updateTrips:location.coordinate];
-    }
-  }];
+    [self updateTrips:location.coordinate];
+  } withAccuracy:10.0];
   
   if (refreshControl) {
     [refreshControl endRefreshing];

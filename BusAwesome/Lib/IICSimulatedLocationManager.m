@@ -44,7 +44,7 @@
             
             for (CLLocation *location in lineString.coordinates) {
               [locations addObject:location];
-              NSLog(@"Adding location: %f, %f", location.coordinate.latitude, location.coordinate.longitude);
+              NSLog(@"IIC Simulated Location Manager adding location: %f, %f", location.coordinate.latitude, location.coordinate.longitude);
             }
             
             self.locations = locations;
@@ -63,6 +63,7 @@
 {
   if (self.delegate) {
     CLLocation *location = self.locations[self.currentStep];
+    NSLog(@"IIC Simulated Location Manager reporting location: %f, %f", location.coordinate.latitude, location.coordinate.longitude);
     [self.delegate locationManager:self didUpdateLocations:@[location]];
   }
   self.currentStep++;

@@ -25,6 +25,7 @@
   RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:tripMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
   RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:req responseDescriptors:@[responseDescriptor]];
   
+  NSLog(@"Sending request to %@...", reqUrl);
   [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
     block([result array]);
   } failure:nil];
@@ -40,6 +41,7 @@
   RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:tripMapping method:RKRequestMethodAny pathPattern:nil keyPath:nil statusCodes:nil];
   RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:req responseDescriptors:@[responseDescriptor]];
   
+  NSLog(@"Sending request to %@...", reqUrl);
   [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
     block((BUSTrip* )[result firstObject]);
   } failure:nil];

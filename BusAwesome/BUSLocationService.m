@@ -19,6 +19,7 @@
 }
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, copy) LocationBlock singleLocationCallback;
+@property (nonatomic) double singleLocationAccuracy;
 @end
 
 @implementation BUSLocationService
@@ -49,23 +50,31 @@
   [self.delegate didUpdateLocations:locations];
   
   if (self.singleLocationCallback) {
-    [self stopUpdatingLocation];
-    self.singleLocationCallback([locations firstObject]); // usually the first one is good enough
-    self.singleLocationCallback = nil;
+    CLLocation *location = [locations firstObject]; // usually the first one is good enough
+    if (location.horizontalAccuracy <= self.singleLocationAccuracy || location.verticalAccuracy <= self.singleLocationAccuracy) {
+      NSLog(@"Firing single location callback");
+      [self stopUpdatingLocation];
+      self.singleLocationCallback(location);
+      self.singleLocationCallback = nil;
+    }
   }
 }
 
-- (void)getCurrentLocation:(LocationBlock)callback
+- (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy
 {
-  [self startUpdatingLocation];
   self.singleLocationCallback = callback;
+  self.singleLocationAccuracy = accuracy;
+  [self startUpdatingLocation];
 }
 
 - (void)startUpdatingLocation
 {
-  if (_locationRefCount == 0) {
-    _locationRefCount++;
+  _locationRefCount++;
+  NSLog(@"BUSLS rc = %d", _locationRefCount);
+  
+  if (_locationRefCount == 1) {
     if ([CLLocationManager locationServicesEnabled]) {
+      NSLog(@"BUSLS sgtarting");
       [self.locationManager startUpdatingLocation];
     }
     else {
@@ -78,10 +87,17 @@
 {
   if (_locationRefCount > 0) {
     _locationRefCount--;
-    if ([CLLocationManager locationServicesEnabled]) {
-      [self.locationManager stopUpdatingLocation];
+    
+    NSLog(@"BUSLS rc = %d", _locationRefCount);
+    
+    if (_locationRefCount == 0) {
+      if ([CLLocationManager locationServicesEnabled]) {
+        NSLog(@"BUSLS stopping");
+        [self.locationManager stopUpdatingLocation];
+      }
     }
   }
+  
 }
 
 @end

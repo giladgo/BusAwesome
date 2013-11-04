@@ -24,7 +24,7 @@ typedef void (^LocationBlock)(CLLocation *location);
 -(instancetype) init __attribute__((unavailable("init not available")));
 + (instancetype) sharedInstance;
 
-- (void)getCurrentLocation:(LocationBlock)callback;
+- (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy;
 
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;

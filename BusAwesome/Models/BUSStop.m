@@ -13,7 +13,7 @@
 + (RKObjectMapping *)rkMapping {
   RKObjectMapping* stopMapping = [RKObjectMapping mappingForClass:[BUSStop class] ];
   [stopMapping addAttributeMappingsFromDictionary:@{
-                                                     @"stop_id":   @"stopId",
+                                                     @"id":   @"stopId",
                                                      @"stop_sequence":     @"stopSequence",
                                                      @"code":     @"code",
                                                      @"name":     @"name",
