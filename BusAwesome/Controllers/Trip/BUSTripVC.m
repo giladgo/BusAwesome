@@ -14,7 +14,10 @@
 #import "BUSStop.h"
 #import "BUSStop+TripProjection.h"
 
-@interface BUSTripVC ()
+
+@interface BUSTripVC () {
+  dispatch_queue_t _projCalcQ;
+}
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *stops;
 @property (nonatomic, strong) BUSTrip *trip;
@@ -29,20 +32,29 @@
 {
   [super viewDidLoad];
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  _projCalcQ = dispatch_queue_create("ProjCalcQueue", nil);
  
   [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
     self.trip = trip;
     self.stops = [trip.stops copy];
     self.title = trip.route.shortName;
     
-    for (BUSStop *stop in self.stops) {
-      stop.trip = trip;
-    }
+    // Setting the trip for each stop will cause a calculation of the projection of the stop on the trip.
+    // Calculating the projection for all stops takes a really really long time (> 1s), so we're doing
+    // it asynchronously.
+    dispatch_async(_projCalcQ, ^{
+      for (BUSStop *stop in self.stops) {
+        stop.trip = trip;
+      }
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        
+        [[BUSLocationService sharedInstance] startUpdatingLocation];
+        [BUSLocationService sharedInstance].delegate = self;
+
+      });
+    });
     
-    [self.tableView reloadData];
-    
-    [[BUSLocationService sharedInstance] startUpdatingLocation];
-    [BUSLocationService sharedInstance].delegate = self;
   }];
 }
 
@@ -61,6 +73,7 @@
 - (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
 {
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
+  
   for (int i = 0; i < self.stops.count; i++) {
     BUSStop *stop = self.stops[i];
     if (stop.projectionOnTrip > myProjection) {
@@ -72,6 +85,7 @@
       [self sendStopArrivalNotification];
     }
   }
+
 }
 
 - (void)didUpdateLocations:(NSArray *)locations
@@ -85,6 +99,7 @@
 {
   if (highlightStart != _highlightStart) {
     _highlightStart = highlightStart;
+    NSLog(@"Reloading data due to highlight change");
     [self.tableView reloadData];
   }
 }

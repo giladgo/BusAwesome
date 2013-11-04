@@ -17,20 +17,29 @@
 @dynamic trip;
 @dynamic projectionOnTrip;
 
-- (float) projectOnTrip:(BUSTrip *) trip
-{
-  return [trip projectPoint:[self.lat floatValue] lon:[self.lon floatValue]];
-}
+static char TRIP_KEY = 0;
+static char TRIP_PROJECTION_KEY = 0;
+
 
 - (BUSTrip *)trip
 {
-  return objc_getAssociatedObject(self, @selector(trip));
+  return objc_getAssociatedObject(self, &TRIP_KEY);
 }
 
 - (void)setTrip:(BUSTrip *)trip
 {
-  objc_setAssociatedObject(self, @selector(trip), trip, OBJC_ASSOCIATION_ASSIGN /* == weak */);
+  objc_setAssociatedObject(self, &TRIP_KEY, trip, OBJC_ASSOCIATION_ASSIGN /* == weak */);
+  [self calcProjectionOnTrip];
 }
+
+- (void)calcProjectionOnTrip
+{
+  if (self.trip) {
+    float projection = [self.trip projectPoint:[self.lat floatValue] lon:[self.lon floatValue]];
+    objc_setAssociatedObject(self, &TRIP_PROJECTION_KEY, @(projection), OBJC_ASSOCIATION_COPY_NONATOMIC);
+  }
+}
+
 
 - (float)projectionOnTrip
 {
@@ -38,15 +47,15 @@
     return -1.0;
   }
   
-  id proj = objc_getAssociatedObject(self, @selector(projectionOnTrip));
+  id proj = objc_getAssociatedObject(self, &TRIP_PROJECTION_KEY);
   if (proj) {
     return [proj floatValue];
   }
   
-  float projection = [self projectOnTrip:self.trip];
-  objc_setAssociatedObject(@(projection), @selector(projectionOnTrip), [NSNumber numberWithFloat:projection], OBJC_ASSOCIATION_COPY_NONATOMIC);
+  // if not found, calculate it and return its value
+  [self calcProjectionOnTrip];
+  return [objc_getAssociatedObject(self, &TRIP_PROJECTION_KEY) floatValue];
   
-  return projection;
 }
 
 @end

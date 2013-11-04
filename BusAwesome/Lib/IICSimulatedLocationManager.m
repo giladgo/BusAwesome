@@ -63,7 +63,6 @@
 {
   if (self.delegate) {
     CLLocation *location = self.locations[self.currentStep];
-    NSLog(@"Reporting coordinate: %f %f", location.coordinate.latitude, location.coordinate.longitude);
     [self.delegate locationManager:self didUpdateLocations:@[location]];
   }
   self.currentStep++;
@@ -77,7 +76,7 @@
 {
   if (self.locations) {
     // not calling super on purpose
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(step) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(step) userInfo:nil repeats:YES];
   }
   else {
     [super startUpdatingLocation];
