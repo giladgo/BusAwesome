@@ -12,6 +12,7 @@
 #import "BUSRouteListCell.h"
 #import "BUSTripVC.h"
 #import <HexColor.h>
+#import <MBProgressHUD.h>
 
 #define SECTION_HEADER_HEIGHT 42
 
@@ -29,6 +30,7 @@
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   
+  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   [[BUSLocationService sharedInstance] getCurrentLocation:^(CLLocation  *location) {
     if (location.horizontalAccuracy <= 10.0 || location.verticalAccuracy <= 10.0) {
       [self updateTrips:location.coordinate];
@@ -62,6 +64,7 @@
     });
     self.lines = _.keys(self.tripsByLines);
     [self.tableView reloadData];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
   }];
 }
 
