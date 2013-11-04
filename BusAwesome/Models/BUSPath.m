@@ -12,8 +12,6 @@
 +(RKObjectMapping *)rkMapping {
   RKObjectMapping* pathMapping = [RKObjectMapping mappingForClass:[BUSPath class] ];
   [pathMapping addAttributeMappingsFromDictionary:@{
-                                                    @"id":   @"Id",
-                                                    @"shape_id":     @"shapeId",
                                                     @"path":     @"pathWKT",
                                                   }];
   return pathMapping;

@@ -62,9 +62,8 @@
 
 -(void)updateTrips:(CLLocationCoordinate2D)coordinate
 {
-  // TODO: due to error in server, we're reversing the lat/lon
-  NSNumber *lat =[[NSNumber alloc] initWithDouble:coordinate.longitude];
-  NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.latitude];
+  NSNumber *lat =[[NSNumber alloc] initWithDouble:coordinate.latitude];
+  NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.longitude];
 
   [BUSGTFSService findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.tripsByLines = _.reduce(trips, [NSMutableDictionary new], ^(NSMutableDictionary *memo, BUSTrip *trip) {
