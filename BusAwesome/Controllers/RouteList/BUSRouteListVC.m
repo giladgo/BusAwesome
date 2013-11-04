@@ -33,7 +33,8 @@
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   
-  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  hud.labelText = @"טוען קוים קרובים...";
   [[BUSLocationService sharedInstance] getCurrentLocation:^(CLLocation  *location) {
     if (location.horizontalAccuracy <= 10.0 || location.verticalAccuracy <= 10.0) {
       [self updateTrips:location.coordinate];

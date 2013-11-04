@@ -7,6 +7,8 @@
 //
 
 #import <MBProgressHUD/MBProgressHUD.h>
+#import <Underscore.h>
+#import <Underscore+Functional.h>
 
 #import "BUSTripVC.h"
 #import "BUSStopCell.h"
@@ -34,12 +36,13 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   _projCalcQ = dispatch_queue_create("ProjCalcQueue", nil);
  
-  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  hud.labelText = @"טוען תחנות...";
   
   [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
     self.trip = trip;
     self.stops = [trip.stops copy];
-    self.title = trip.route.shortName;
+    self.title = [NSString stringWithFormat:@"קו %@ לכיוון %@", trip.route.shortName, trip.destination ];
     
     // Setting the trip for each stop will cause a calculation of the projection of the stop on the trip.
     // Calculating the projection for all stops takes a really really long time (> 1s), so we're doing
@@ -105,8 +108,26 @@
 - (void)setHighlightStart:(int)highlightStart
 {
   if (highlightStart != _highlightStart) {
+    
+    int oldHiglightStart = _highlightStart;
     _highlightStart = highlightStart;
-    [self.tableView reloadData];
+
+    [self.tableView beginUpdates];
+    NSArray* indexesToUpdate = Underscore.array( @[
+                                 [NSIndexPath indexPathForRow:oldHiglightStart   inSection:0],
+                                 [NSIndexPath indexPathForRow:oldHiglightStart+1 inSection:0],
+                                 [NSIndexPath indexPathForRow:_highlightStart    inSection:0],
+                                 [NSIndexPath indexPathForRow:_highlightStart+1  inSection:0]
+                                 ]).uniq.unwrap;
+    
+    [self.tableView reloadRowsAtIndexPaths:indexesToUpdate
+                          withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+    
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_highlightStart inSection:0]
+                          atScrollPosition:UITableViewScrollPositionMiddle
+                                  animated:YES];
+
   }
 }
 
