@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Gilad Goldberg. All rights reserved.
 //
 
-
+#import <MBProgressHUD/MBProgressHUD.h>
 
 #import "BUSTripVC.h"
 #import "BUSStopCell.h"
@@ -34,6 +34,8 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   _projCalcQ = dispatch_queue_create("ProjCalcQueue", nil);
  
+  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+  
   [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
     self.trip = trip;
     self.stops = [trip.stops copy];
@@ -80,6 +82,11 @@
       self.highlightStart = i - 1;
       break;
     }
+    
+    // Doing this here and not in the end of viewDidLoad because we want to
+    // hide the progress HUD only after the first location has arrived
+    // (and not when finished loading the stops)
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     
     if (self.destinationStop && stop.stopId == self.destinationStop.stopId) {
       [self sendStopArrivalNotification];
