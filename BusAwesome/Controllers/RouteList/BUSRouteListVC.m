@@ -6,13 +6,14 @@
 //  Copyright (c) 2013 Gilad Goldberg. All rights reserved.
 //
 
+#import <HexColor.h>
 #import "UIViewController+IICNavigator.h"
 #import "BUSRouteListVC.h"
 #import "BUSGTFSService.h"
 #import "BUSRouteListCell.h"
 #import "BUSTripVC.h"
-#import <HexColor.h>
 #import <MBProgressHUD.h>
+#import "BUSRouteListSectionHeader.h"
 
 #define SECTION_HEADER_HEIGHT 42
 
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) NSDictionary *tripsByLines;
 @property (nonatomic, strong) NSArray *lines;
 @property (nonatomic, strong) NSDictionary *agencyColorsById;
+
+- (NSArray *)getTripsFromSection:(NSInteger)section;
 @end
 
 @implementation BUSRouteListVC
@@ -71,46 +74,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   BUSRouteListCell *cell = (BUSRouteListCell*)[tableView dequeueReusableCellWithIdentifier:@"RouteList" forIndexPath:indexPath];
-  NSString *lineName = self.lines[[indexPath section]];
-  NSArray *trips = [self.tripsByLines objectForKey:lineName];
-  BUSTrip *trip = trips[[indexPath row]];
+  NSArray *trips = [self getTripsFromSection:indexPath.section];
+  BUSTrip *trip = trips[indexPath.row];
   cell.routeNameLabel.text = [NSString stringWithFormat:@"לכיוון %@", trip.destination];
   return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-  NSString *lineName = self.lines[section];
-  NSArray *trips = self.tripsByLines[lineName];
+  NSArray *trips = [self getTripsFromSection:section];
   BUSTrip *aTrip = trips[0];
   NSString *agencyId = aTrip.route.agency.Id;
   NSString *agencyHexColor = self.agencyColorsById[agencyId];
   UIColor *agencyBGColor = [UIColor colorWithHexString:agencyHexColor alpha:1];
   
-  // Create label with section title
-  UILabel *lineLabel = [UILabel new];
-  lineLabel.frame = CGRectMake(10, 6, 300, 30);
-  lineLabel.backgroundColor = [UIColor clearColor];
-  lineLabel.textColor = [UIColor whiteColor];
-  lineLabel.textAlignment = UITextLayoutDirectionRight;
-  lineLabel.font = [UIFont boldSystemFontOfSize:17];
-  lineLabel.text = [NSString stringWithFormat:@"קו %@", aTrip.route.shortName];
+  NSString *lineNumberCaption = [NSString stringWithFormat:@"קו %@", aTrip.route.shortName];
+  NSString *agencyCaption = aTrip.route.agency.name;
   
-  UILabel *agencyLabel = [UILabel new];
-  agencyLabel.frame = CGRectMake(10, 6, 300, 30);
-  agencyLabel.backgroundColor = [UIColor clearColor];
-  agencyLabel.textColor = [UIColor whiteColor];
-  agencyLabel.textAlignment = UITextLayoutDirectionLeft;
-  agencyLabel.font = [UIFont boldSystemFontOfSize:17];
-  agencyLabel.text = aTrip.route.agency.name;
-  
-  // Create header view and add label as a subview
-  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, SECTION_HEADER_HEIGHT)];
-  [view addSubview:lineLabel];
-  [view addSubview:agencyLabel];
-  view.backgroundColor = agencyBGColor;
-  
-  return view;
+  BUSRouteListSectionHeader *sectionHeader = [[BUSRouteListSectionHeader alloc] initWithLineNumber:lineNumberCaption withAgencyName:agencyCaption withBackgroundColor:agencyBGColor];
+  return sectionHeader;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -120,8 +102,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  NSString *lineName = self.lines[section];
-  NSArray *trips = [self.tripsByLines objectForKey:lineName];
+  NSArray *trips = [self getTripsFromSection:section];
   return trips.count;
 }
 
@@ -132,14 +113,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSString *lineName = self.lines[indexPath.section];
-  NSArray *trips = [self.tripsByLines objectForKey:lineName];
+  NSArray *trips = [self getTripsFromSection:indexPath.section];
   BUSTrip *trip = trips[indexPath.row];
   
   BUSTripVC *vc = (BUSTripVC*)[self viewFrom:@"Trip"];
   vc.tripId = trip.Id;
   
   [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (NSArray *)getTripsFromSection:(NSInteger)section
+{
+  NSString *lineName = self.lines[section];
+  return self.tripsByLines[lineName];
 }
 
 @end

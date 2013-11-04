@@ -16,6 +16,9 @@
 		6631187618211EC500993AF6 /* BUSGTFSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6631187518211EC500993AF6 /* BUSGTFSService.m */; };
 		6688466318213CAC000D3457 /* BUSRouteListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688466218213CAC000D3457 /* BUSRouteListCell.m */; };
 		66BA17F018267FD400E4397E /* agency-colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66BA17EF18267FD400E4397E /* agency-colors.plist */; };
+		66D972FA18278EB500B3C517 /* BUSRouteListSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D972F918278EB500B3C517 /* BUSRouteListSectionHeader.m */; };
+		66D972FE18278F1D00B3C517 /* RouteListSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66D972FD18278F1D00B3C517 /* RouteListSectionHeader.xib */; };
+		66D973011827989C00B3C517 /* UIXibView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D973001827989C00B3C517 /* UIXibView.m */; };
 		946FD0981826513E00ADD588 /* BUSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0971826513E00ADD588 /* BUSLocationService.m */; };
 		946FD0A618268EC100ADD588 /* IICSimulatedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */; };
 		946FD0A818269DFC00ADD588 /* bus61.kml in Resources */ = {isa = PBXBuildFile; fileRef = 946FD0A718269DFC00ADD588 /* bus61.kml */; };
@@ -70,6 +73,11 @@
 		6688466118213CAC000D3457 /* BUSRouteListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSRouteListCell.h; path = Views/RouteList/BUSRouteListCell.h; sourceTree = "<group>"; };
 		6688466218213CAC000D3457 /* BUSRouteListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSRouteListCell.m; path = Views/RouteList/BUSRouteListCell.m; sourceTree = "<group>"; };
 		66BA17EF18267FD400E4397E /* agency-colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "agency-colors.plist"; path = "Resources/agency-colors.plist"; sourceTree = "<group>"; };
+		66D972F818278EB500B3C517 /* BUSRouteListSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSRouteListSectionHeader.h; path = Views/RouteList/BUSRouteListSectionHeader.h; sourceTree = "<group>"; };
+		66D972F918278EB500B3C517 /* BUSRouteListSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSRouteListSectionHeader.m; path = Views/RouteList/BUSRouteListSectionHeader.m; sourceTree = "<group>"; };
+		66D972FD18278F1D00B3C517 /* RouteListSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RouteListSectionHeader.xib; path = Views/RouteList/RouteListSectionHeader.xib; sourceTree = "<group>"; };
+		66D972FF1827989C00B3C517 /* UIXibView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIXibView.h; path = Lib/UIXibView.h; sourceTree = "<group>"; };
+		66D973001827989C00B3C517 /* UIXibView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIXibView.m; path = Lib/UIXibView.m; sourceTree = "<group>"; };
 		6A09F377CEFF47639D70D6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		946FD0961826513E00ADD588 /* BUSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUSLocationService.h; sourceTree = "<group>"; };
 		946FD0971826513E00ADD588 /* BUSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BUSLocationService.m; sourceTree = "<group>"; };
@@ -280,6 +288,8 @@
 				94F8717E1820066F00911620 /* UIViewController+IICNavigator.m */,
 				946FD0A418268EC100ADD588 /* IICSimulatedLocationManager.h */,
 				946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */,
+				66D972FF1827989C00B3C517 /* UIXibView.h */,
+				66D973001827989C00B3C517 /* UIXibView.m */,
 			);
 			name = Lib;
 			sourceTree = "<group>";
@@ -299,6 +309,9 @@
 				94F871801820073600911620 /* RouteList.storyboard */,
 				6688466118213CAC000D3457 /* BUSRouteListCell.h */,
 				6688466218213CAC000D3457 /* BUSRouteListCell.m */,
+				66D972F818278EB500B3C517 /* BUSRouteListSectionHeader.h */,
+				66D972F918278EB500B3C517 /* BUSRouteListSectionHeader.m */,
+				66D972FD18278F1D00B3C517 /* RouteListSectionHeader.xib */,
 			);
 			name = RouteList;
 			sourceTree = "<group>";
@@ -416,6 +429,7 @@
 				94F8719118210A6800911620 /* Trip.storyboard in Resources */,
 				94B04424181FF7A200D3E15B /* InfoPlist.strings in Resources */,
 				66BA17F018267FD400E4397E /* agency-colors.plist in Resources */,
+				66D972FE18278F1D00B3C517 /* RouteListSectionHeader.xib in Resources */,
 				94F871811820073600911620 /* RouteList.storyboard in Resources */,
 				94F871791820065800911620 /* Top.storyboard in Resources */,
 				946FD0A818269DFC00ADD588 /* bus61.kml in Resources */,
@@ -471,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6688466318213CAC000D3457 /* BUSRouteListCell.m in Sources */,
+				66D972FA18278EB500B3C517 /* BUSRouteListSectionHeader.m in Sources */,
 				94F8718E18210A0A00911620 /* BUSTripVC.m in Sources */,
 				94B04426181FF7A200D3E15B /* main.m in Sources */,
 				6631186618210E1200993AF6 /* BUSTrip.m in Sources */,
@@ -483,6 +498,7 @@
 				94F8719418210C2A00911620 /* BUSStopCell.m in Sources */,
 				947C9D5F1821453C00C7B008 /* BUSStop+TripProjection.m in Sources */,
 				94F871851820077E00911620 /* BUSRouteListVC.m in Sources */,
+				66D973011827989C00B3C517 /* UIXibView.m in Sources */,
 				94F8719718212E3300911620 /* BUSStopWidget.m in Sources */,
 				94F8717C1820066600911620 /* BUSTopViewController.m in Sources */,
 				6631186F18210E6400993AF6 /* BUSStop.m in Sources */,
