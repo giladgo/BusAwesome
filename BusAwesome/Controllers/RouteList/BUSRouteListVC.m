@@ -54,18 +54,21 @@
   NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.latitude];
 
   [BUSGTFSService findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
-    self.tripsByLines = _.reduce(trips, [NSMutableDictionary new], ^(NSDictionary *memo, BUSTrip *trip) {
+    self.tripsByLines = _.reduce(trips, [NSMutableDictionary new], ^(NSMutableDictionary *memo, BUSTrip *trip) {
       NSMutableArray *currentElement = [memo objectForKey:trip.route.shortName];
       if (!currentElement) {
         currentElement = [[NSMutableArray alloc] initWithArray:@[trip]];
-      }
-      else {
+      } else {
         [currentElement addObject:trip];
       }
-      [memo setValue:currentElement forKey:trip.route.shortName];
+      memo[trip.route.shortName] = currentElement;
       return memo;
     });
-    self.lines = _.keys(self.tripsByLines);
+    self.lines = [_.keys(self.tripsByLines) sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+      NSNumber *first = @([((NSString *)a) integerValue]);
+      NSNumber *second = @([((NSString *)b) integerValue]);
+      return [first compare:second];
+    }];
     [self.tableView reloadData];
     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
   }];
@@ -102,8 +105,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  NSArray *trips = [self getTripsFromSection:section];
-  return trips.count;
+  return [self getTripsFromSection:section].count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
