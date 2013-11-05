@@ -39,16 +39,21 @@
       {
         if ([feature isKindOfClass:[SimpleKMLPlacemark class]]) {
           SimpleKMLPlacemark *placemark = (SimpleKMLPlacemark *)feature;
+          SimpleKMLLineString *lineString;
           if (placemark.lineString) {
-            SimpleKMLLineString *lineString = placemark.lineString;
-            
-            for (CLLocation *location in lineString.coordinates) {
-              [locations addObject:location];
-              NSLog(@"IIC Simulated Location Manager adding location: %f, %f", location.coordinate.latitude, location.coordinate.longitude);
-            }
-            
-            self.locations = locations;
+            lineString = placemark.lineString;
           }
+          else if (placemark.geometry) {
+            lineString = (SimpleKMLLineString*)placemark.firstGeometry;
+          }
+            
+          for (CLLocation *location in lineString.coordinates) {
+            [locations addObject:location];
+            NSLog(@"IIC Simulated Location Manager adding location: %f, %f", location.coordinate.latitude, location.coordinate.longitude);
+          }
+          
+          self.locations = locations;
+          
         }
       }
     }
