@@ -15,7 +15,7 @@
 #import <MBProgressHUD.h>
 #import "BUSRouteListSectionHeader.h"
 
-#define SECTION_HEADER_HEIGHT 44
+#define SECTION_HEADER_HEIGHT 42
 #define CELL_ROW_HEIGHT 44
 
 @interface BUSRouteListVC ()
@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSDictionary *agencyColorsById;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) BUSLocationService *locationService;
+@property (nonatomic) BOOL didLoadDataForTheFirstTime;
 
 - (NSArray *)getTripsFromSection:(NSInteger)section;
 @end
@@ -32,24 +33,35 @@
 
 - (void)viewDidLoad
 {
+  self.didLoadDataForTheFirstTime = false;
   [self initAgencyColors];
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
   
   self.locationService = [BUSLocationService new];
-  
-  MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-  hud.labelText = @"טוען קווים קרובים...";
-  
   [self refresh:nil];
-  
+  [self initRefreshControl];
+}
+
+- (void)initRefreshControl
+{
   // Doing this way because the property is weak, so we need a local variable to keep
   // it in memory until we add it as a subview, which will retain it
-  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+  UIRefreshControl *refreshControl = [UIRefreshControl new];
   [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
   [self.tableView addSubview:refreshControl];
-  
+  [self showHUD:YES];
   self.refreshControl = refreshControl;
+}
+
+- (void)showHUD:(BOOL)show
+{
+  if (show) {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"טוען קווים קרובים...";
+  } else {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+  }
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
@@ -70,7 +82,7 @@
   NSNumber *lat =[[NSNumber alloc] initWithDouble:coordinate.latitude];
   NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.longitude];
 
-  [BUSGTFSService findTrips:lon withLongitude:lat withRadiusInMeters:nil withBlock:^(NSArray *trips) {
+  [BUSGTFSService findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.tripsByLines = _.reduce(trips, [NSMutableDictionary new], ^(NSMutableDictionary *memo, BUSTrip *trip) {
       NSMutableArray *currentElement = [memo objectForKey:trip.route.shortName];
       if (!currentElement) {
@@ -86,8 +98,9 @@
       NSNumber *second = @([((NSString *)b) integerValue]);
       return [first compare:second];
     }];
+    self.didLoadDataForTheFirstTime = true;
     [self.tableView reloadData];
-    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+    [self showHUD:NO];
     [self.refreshControl endRefreshing];
   }];
 }
@@ -95,9 +108,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   BUSRouteListCell *cell = (BUSRouteListCell*)[tableView dequeueReusableCellWithIdentifier:@"RouteList" forIndexPath:indexPath];
+  if (self.lines.count == 0 && !self.didLoadDataForTheFirstTime) return cell;
+  
   NSArray *trips = [self getTripsFromSection:indexPath.section];
   if (trips.count == 0) {
-    cell.textLabel.textAlignment = UITextAlignmentCenter;
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.text = @"לא נמצאו קווים עבור המיקום הנוכחי.";
   } else {
     BUSTrip *trip = trips[indexPath.row];
