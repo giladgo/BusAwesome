@@ -9,7 +9,14 @@
 #import "BUSStop.h"
 #import "BUSTrip.h"
 
-@interface BUSStop (TripProjection)
+@protocol HasTripProjection <NSObject>
+
+@property (nonatomic, strong) BUSTrip *trip;
+@property (nonatomic, readonly) float projectionOnTrip;
+
+@end
+
+@interface BUSStop (TripProjection) <HasTripProjection>
 
 @property (nonatomic, strong) BUSTrip *trip;
 @property (nonatomic, readonly) float projectionOnTrip;

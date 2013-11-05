@@ -32,7 +32,7 @@
     ShapeKitPolyline *polyLine = [[ShapeKitPolyline alloc] initWithWKT:self.path.pathWKT];
     
     ShapeKitPoint *pt = [[ShapeKitPoint alloc] initWithCoordinate:CLLocationCoordinate2DMake(lat, lon)];
-    return [polyLine normalizedDistanceFromOriginToProjectionOfPoint:pt];
+    return [polyLine distanceFromOriginToProjectionOfPoint:pt];
   }
   
   return -1.0;

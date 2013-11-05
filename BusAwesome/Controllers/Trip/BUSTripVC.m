@@ -17,13 +17,19 @@
 #import "BUSStop+TripProjection.h"
 
 
+typedef struct {
+  NSUInteger stop1;
+  NSUInteger stop2;
+  BOOL stop2Higlighted;
+} StopHighlight;
+
 @interface BUSTripVC () {
   dispatch_queue_t _projCalcQ;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *stops;
 @property (nonatomic, strong) BUSTrip *trip;
-@property (nonatomic) int highlightStart;
+@property (nonatomic) StopHighlight highlight;
 @property (nonatomic, strong) BUSStop *destinationStop;
 @end
 
@@ -111,18 +117,54 @@
   NSLog(@"Got coordinate: %f, %f", coord.latitude, coord.latitude);
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
   
-  for (int i = 0; i < self.stops.count; i++) {
-    BUSStop *stop = self.stops[i];
-    if (stop.projectionOnTrip > myProjection) {
-      self.highlightStart = i - 1;
-      
-      if (self.destinationStop && stop.stopId == self.destinationStop.stopId) {
-        [self sendStopArrivalNotification];
-      }
-      
-      break;
-    }
+  NSUInteger afterIndex = [self.stops indexOfObject:@(myProjection)
+                                      inSortedRange:NSMakeRange(0, self.stops.count)
+                                            options:NSBinarySearchingInsertionIndex
+                                    usingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                      
+                                      float proj1 = 0.0;
+                                      if ([obj1 isKindOfClass:[NSNumber class]]) {
+                                        proj1 = [obj1 floatValue];
+                                      } else if ([obj1 conformsToProtocol:@protocol(HasTripProjection)]) {
+                                        proj1 = ((id<HasTripProjection>)obj1).projectionOnTrip;
+                                      }
+                                      
+                                      float proj2 = 0.0;
+                                      if ([obj2 isKindOfClass:[NSNumber class]]) {
+                                        proj2 = [obj2 floatValue];
+                                      } else if ([obj1 conformsToProtocol:@protocol(HasTripProjection)]) {
+                                        proj2 = ((id<HasTripProjection>)obj2).projectionOnTrip;
+                                      }
+                                      
+                                      if (proj1 < proj2) {
+                                        return NSOrderedAscending;
+                                      } else if (proj2 < proj1) {
+                                        return NSOrderedDescending;
+                                      }
+                                      return NSOrderedSame;
+                                    }];
+  
+  BUSStop *afterStop = self.stops[afterIndex];
+  BUSStop *prevStop = self.stops[afterIndex - 1];
+  
+  StopHighlight highlight;
+#define CLOSE_ENOUGH_TO_STOP 0.0001
+  // if we are too close to either stations, highlight it only
+  if (fabsf(prevStop.projectionOnTrip - myProjection) < CLOSE_ENOUGH_TO_STOP ) {
+    highlight.stop1 = afterIndex - 1;
+    highlight.stop2Higlighted = NO;
   }
+  else if (fabsf(afterStop.projectionOnTrip - myProjection) < CLOSE_ENOUGH_TO_STOP ) {
+    highlight.stop1 = afterIndex;
+    highlight.stop2Higlighted = NO;
+  }
+  else {
+    highlight.stop1 = afterIndex - 1;
+    highlight.stop2 = afterIndex;
+    highlight.stop2Higlighted = YES;
+  }
+  
+  self.highlight = highlight;
   
   // Doing this here and not in the end of viewDidLoad because we want to
   // hide the progress HUD only after the first location has arrived
@@ -138,27 +180,48 @@
   }
 }
 
-- (void)setHighlightStart:(int)highlightStart
+BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
+  if (h1.stop1 != h2.stop1) {
+    return YES;
+  }
+  
+  if (h1.stop2Higlighted != h2.stop2Higlighted) {
+    return YES;
+  }
+  
+  if (h1.stop2Higlighted && h2.stop2Higlighted && h1.stop2 != h2.stop2) {
+    return YES;
+  }
+  
+  return NO;
+}
+
+- (void)setHighlight:(StopHighlight)highlight
 {
-  if (highlightStart != _highlightStart) {
+  if (highlightDiff(highlight, _highlight)) {
     
-    int oldHiglightStart = _highlightStart;
-    _highlightStart = highlightStart;
+    StopHighlight oldHiglight = _highlight;
+    _highlight = highlight;
 
     if ([self.tableView numberOfRowsInSection:0]) {
       [self.tableView beginUpdates];
-      NSArray* indexesToUpdate = Underscore.array( @[
-                                   [NSIndexPath indexPathForRow:oldHiglightStart   inSection:0],
-                                   [NSIndexPath indexPathForRow:oldHiglightStart+1 inSection:0],
-                                   [NSIndexPath indexPathForRow:_highlightStart    inSection:0],
-                                   [NSIndexPath indexPathForRow:_highlightStart+1  inSection:0]
-                                   ]).uniq.unwrap;
       
-      [self.tableView reloadRowsAtIndexPaths:indexesToUpdate
+      NSMutableArray *indexesToUpdate = [NSMutableArray new];
+      [indexesToUpdate addObject:[NSIndexPath indexPathForRow:oldHiglight.stop1 inSection:0]];
+      [indexesToUpdate addObject:[NSIndexPath indexPathForRow:_highlight.stop1 inSection:0]];
+      
+      if (oldHiglight.stop2Higlighted) {
+        [indexesToUpdate addObject:[NSIndexPath indexPathForRow:oldHiglight.stop2 inSection:0]];
+      }
+      if (_highlight.stop2Higlighted) {
+        [indexesToUpdate addObject:[NSIndexPath indexPathForRow:_highlight.stop2 inSection:0]];
+      }
+      
+      [self.tableView reloadRowsAtIndexPaths:Underscore.array(indexesToUpdate).uniq.unwrap
                             withRowAnimation:UITableViewRowAnimationNone];
       [self.tableView endUpdates];
       
-      [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_highlightStart inSection:0]
+      [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:highlight.stop1 inSection:0]
                             atScrollPosition:UITableViewScrollPositionMiddle
                                     animated:YES];
     }
@@ -192,10 +255,10 @@
     BUSStop *stop = self.stops[indexPath.row];
     stopCell.stopName = stop.name;
     
-    if (indexPath.row == self.highlightStart) {
+    if (indexPath.row == self.highlight.stop1) {
       stopCell.highlightMode = StopHighlightModeStopAndBottom;
     }
-    else if (indexPath.row == (self.highlightStart + 1)) {
+    else if (indexPath.row == self.highlight.stop2) {
       stopCell.highlightMode = StopHighlightModeStopAndTop;
     }
     else {
