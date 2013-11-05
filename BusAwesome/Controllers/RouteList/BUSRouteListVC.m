@@ -15,7 +15,8 @@
 #import <MBProgressHUD.h>
 #import "BUSRouteListSectionHeader.h"
 
-#define SECTION_HEADER_HEIGHT 42
+#define SECTION_HEADER_HEIGHT 44
+#define CELL_ROW_HEIGHT 44
 
 @interface BUSRouteListVC ()
 @property (nonatomic, strong) NSDictionary *tripsByLines;
@@ -66,7 +67,7 @@
   NSNumber *lat =[[NSNumber alloc] initWithDouble:coordinate.latitude];
   NSNumber *lon =  [[NSNumber alloc] initWithDouble:coordinate.longitude];
 
-  [BUSGTFSService findTrips:lat withLongitude:lon withRadiusInMeters:nil withBlock:^(NSArray *trips) {
+  [BUSGTFSService findTrips:lon withLongitude:lat withRadiusInMeters:nil withBlock:^(NSArray *trips) {
     self.tripsByLines = _.reduce(trips, [NSMutableDictionary new], ^(NSMutableDictionary *memo, BUSTrip *trip) {
       NSMutableArray *currentElement = [memo objectForKey:trip.route.shortName];
       if (!currentElement) {
@@ -92,14 +93,21 @@
 {
   BUSRouteListCell *cell = (BUSRouteListCell*)[tableView dequeueReusableCellWithIdentifier:@"RouteList" forIndexPath:indexPath];
   NSArray *trips = [self getTripsFromSection:indexPath.section];
-  BUSTrip *trip = trips[indexPath.row];
-  cell.routeNameLabel.text = [NSString stringWithFormat:@"לכיוון %@", trip.destination];
+  if (trips.count == 0) {
+    cell.textLabel.textAlignment = UITextAlignmentCenter;
+    cell.textLabel.text = @"לא נמצאו קווים עבור המיקום הנוכחי.";
+  } else {
+    BUSTrip *trip = trips[indexPath.row];
+    cell.routeNameLabel.text = [NSString stringWithFormat:@"לכיוון %@", trip.destination];
+  }
   return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
   NSArray *trips = [self getTripsFromSection:section];
+  if (trips.count == 0) return nil;
+  
   BUSTrip *aTrip = trips[0];
   NSString *agencyId = aTrip.route.agency.Id;
   NSString *agencyHexColor = self.agencyColorsById[agencyId];
@@ -112,23 +120,41 @@
   return sectionHeader;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (self.lines.count == 0) return tableView.frame.size.height - self.refreshControl.frame.size.height;
+  return CELL_ROW_HEIGHT;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+  if (self.lines.count == 0) return 0;
   return SECTION_HEADER_HEIGHT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [self getTripsFromSection:section].count;
+  int rowsInSectionCount = [self getTripsFromSection:section].count;
+  if (rowsInSectionCount == 0) return 1;
+  return rowsInSectionCount;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+  if (self.lines.count == 0) return 1;
   return self.lines.count;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (self.lines.count > 0) return indexPath;
+  return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  if (self.lines.count == 0) return;
+  
   NSArray *trips = [self getTripsFromSection:indexPath.section];
   BUSTrip *trip = trips[indexPath.row];
   
@@ -140,6 +166,8 @@
 
 - (NSArray *)getTripsFromSection:(NSInteger)section
 {
+  if (self.lines.count == 0) return @[];
+  
   NSString *lineName = self.lines[section];
   return self.tripsByLines[lineName];
 }
