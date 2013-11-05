@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSArray *lines;
 @property (nonatomic, strong) NSDictionary *agencyColorsById;
 @property (nonatomic, weak) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) BUSLocationService *locationService;
 
 - (NSArray *)getTripsFromSection:(NSInteger)section;
 @end
@@ -34,6 +35,8 @@
   [self initAgencyColors];
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
+  
+  self.locationService = [BUSLocationService new];
   
   MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   hud.labelText = @"טוען קווים קרובים...";
@@ -51,7 +54,7 @@
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
   [self.refreshControl beginRefreshing];
-  [[BUSLocationService sharedInstance] getCurrentLocation:^(CLLocation  *location) {
+  [self.locationService getCurrentLocation:^(CLLocation  *location) {
     [self updateTrips:location.coordinate];
   } withAccuracy:10.0];
 }

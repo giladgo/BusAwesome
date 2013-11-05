@@ -21,9 +21,6 @@ typedef void (^LocationBlock)(CLLocation *location);
 
 @property id<BUSLocationServiceDelegate> delegate;
 
--(instancetype) init __attribute__((unavailable("init not available")));
-+ (instancetype) sharedInstance;
-
 - (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy;
 
 - (void)startUpdatingLocation;

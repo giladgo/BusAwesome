@@ -31,6 +31,7 @@ typedef struct {
 @property (nonatomic, strong) BUSTrip *trip;
 @property (nonatomic) StopHighlight highlight;
 @property (nonatomic, strong) BUSStop *destinationStop;
+@property (nonatomic, strong) BUSLocationService *locationService;
 @end
 
 @implementation BUSTripVC
@@ -45,7 +46,8 @@ typedef struct {
   MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   hud.labelText = @"טוען תחנות...";
   
-  [BUSLocationService sharedInstance].delegate = self;
+  self.locationService = [BUSLocationService new];
+  self.locationService.delegate = self;
   [self setupNotifications];
   
   [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
@@ -63,7 +65,7 @@ typedef struct {
       dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
         
-        [[BUSLocationService sharedInstance] startUpdatingLocation];
+        [self.locationService startUpdatingLocation];
       });
     });
     
@@ -89,12 +91,12 @@ typedef struct {
 
 - (void)appHasGoneInBackground:(NSNotification *)notification
 {
-  [[BUSLocationService sharedInstance] stopUpdatingLocation];
+  [self.locationService stopUpdatingLocation];
 }
 
 - (void)appWillGoToForeground:(NSNotification *)notification
 {
-  [[BUSLocationService sharedInstance] startUpdatingLocation];
+  [self.locationService startUpdatingLocation];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -285,10 +287,10 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
 - (void)setDestinationStop:(BUSStop *)destinationStop
 {
   if (destinationStop) {
-    [[BUSLocationService sharedInstance] startUpdatingLocation];
+    [self.locationService startUpdatingLocation];
   }
   else {
-    [[BUSLocationService sharedInstance] stopUpdatingLocation];
+    [self.locationService stopUpdatingLocation];
   }
   _destinationStop = destinationStop;
 }

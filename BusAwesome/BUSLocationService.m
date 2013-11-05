@@ -24,24 +24,17 @@
 
 @implementation BUSLocationService
 
-+ (instancetype)sharedInstance
+- (id)init
 {
-  static BUSLocationService *_sharedInstance;
-  static dispatch_once_t onceToken;
-  
-  dispatch_once(&onceToken, ^{ _sharedInstance = [[BUSLocationService alloc] privateInit]; });
-  return _sharedInstance;
-}
-
-- (id)privateInit
-{
+  if (self = [super init]) {
 #if TARGET_IPHONE_SIMULATOR
-  self.locationManager = [[IICSimulatedLocationManager alloc] initWithKML:@"bus61"];
+    self.locationManager = [[IICSimulatedLocationManager alloc] initWithKML:@"bus61"];
 #else
-  self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager = [[CLLocationManager alloc] init];
 #endif
-  self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation; // TODO: change this to ten meters
-  self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation; // TODO: change this to ten meters
+    self.locationManager.delegate = self;
+  }
   return self;
 }
 
