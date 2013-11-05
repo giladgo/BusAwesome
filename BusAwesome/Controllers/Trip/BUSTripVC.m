@@ -27,7 +27,7 @@ typedef struct {
   dispatch_queue_t _projCalcQ;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *stops;
+
 @property (nonatomic, strong) BUSTrip *trip;
 @property (nonatomic) StopHighlight highlight;
 @property (nonatomic, strong) BUSStop *destinationStop;
@@ -53,14 +53,13 @@ typedef struct {
   
   [BUSGTFSService getTripInfo:self.tripId withBlock:^(BUSTrip *trip) {
     self.trip = trip;
-    self.stops = [trip.stops copy];
     self.title = [NSString stringWithFormat:@"קו %@ לכיוון %@", trip.route.shortName, trip.destination ];
     
     // Setting the trip for each stop will cause a calculation of the projection of the stop on the trip.
     // Calculating the projection for all stops takes a really really long time (> 1s), so we're doing
     // it asynchronously.
     dispatch_async(_projCalcQ, ^{
-      for (BUSStop *stop in self.stops) {
+      for (BUSStop *stop in self.trip.stops) {
         stop.trip = trip;
       }
       dispatch_async(dispatch_get_main_queue(), ^{
@@ -87,7 +86,7 @@ typedef struct {
 
 - (void) teardownNotifications
 {
-  
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)appHasGoneInBackground:(NSNotification *)notification
@@ -103,10 +102,7 @@ typedef struct {
 - (void) viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  
 }
-
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -117,52 +113,29 @@ typedef struct {
 
 - (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
 {
+  BUSStop *prevStop;
+  BUSStop *afterStop;
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
   
-  NSUInteger afterIndex = [self.stops indexOfObject:@(myProjection)
-                                      inSortedRange:NSMakeRange(0, self.stops.count)
-                                            options:NSBinarySearchingInsertionIndex
-                                    usingComparator:^NSComparisonResult(id obj1, id obj2) {
-                                      
-                                      float proj1 = 0.0;
-                                      if ([obj1 isKindOfClass:[NSNumber class]]) {
-                                        proj1 = [obj1 floatValue];
-                                      } else if ([obj1 conformsToProtocol:@protocol(HasTripProjection)]) {
-                                        proj1 = ((id<HasTripProjection>)obj1).projectionOnTrip;
-                                      }
-                                      
-                                      float proj2 = 0.0;
-                                      if ([obj2 isKindOfClass:[NSNumber class]]) {
-                                        proj2 = [obj2 floatValue];
-                                      } else if ([obj1 conformsToProtocol:@protocol(HasTripProjection)]) {
-                                        proj2 = ((id<HasTripProjection>)obj2).projectionOnTrip;
-                                      }
-                                      
-                                      if (proj1 < proj2) {
-                                        return NSOrderedAscending;
-                                      } else if (proj2 < proj1) {
-                                        return NSOrderedDescending;
-                                      }
-                                      return NSOrderedSame;
-                                    }];
+  [self.trip getBoundingStops:coord.latitude
+                          lon:coord.longitude
+                    afterStop:&afterStop
+                     prevStop:&prevStop];
   
-  BUSStop *afterStop = self.stops[afterIndex];
-  BUSStop *prevStop = self.stops[afterIndex - 1];
-  
-  StopHighlight highlight;
 #define CLOSE_ENOUGH_TO_STOP 0.0001
+  StopHighlight highlight;
   // if we are too close to either stations, highlight it only
   if (fabsf(prevStop.projectionOnTrip - myProjection) < CLOSE_ENOUGH_TO_STOP ) {
-    highlight.stop1 = afterIndex - 1;
+    highlight.stop1 = [self.trip indexOfStop:prevStop];
     highlight.stop2Higlighted = NO;
   }
   else if (fabsf(afterStop.projectionOnTrip - myProjection) < CLOSE_ENOUGH_TO_STOP ) {
-    highlight.stop1 = afterIndex;
+    highlight.stop1 = [self.trip indexOfStop:afterStop];
     highlight.stop2Higlighted = NO;
   }
   else {
-    highlight.stop1 = afterIndex - 1;
-    highlight.stop2 = afterIndex;
+    highlight.stop1 = [self.trip indexOfStop:prevStop];
+    highlight.stop2 = [self.trip indexOfStop:afterStop];
     highlight.stop2Higlighted = YES;
   }
   
@@ -205,7 +178,7 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
   if (self.highlight.stop2Higlighted) {
     // case 1 for sending notification - when there is a second stop highlighted
     // and it's the destination selected by the user (more common)
-    BUSStop *stop2 = self.stops[self.highlight.stop2];
+    BUSStop *stop2 = self.trip.stops[self.highlight.stop2];
     if (self.destinationStop && stop2.stopId == self.destinationStop.stopId) {
       [self sendStopArrivalNotification];
     }
@@ -214,7 +187,7 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
   // case 2 for sending notification - when there is only one stop highlighted and
   // it's the destination stop. In theory this should happen less, but we add this
   // here just in case
-  BUSStop *stop1 = self.stops[self.highlight.stop1];
+  BUSStop *stop1 = self.trip.stops[self.highlight.stop1];
   if (self.destinationStop && stop1.stopId == self.destinationStop.stopId) {
     [self sendStopArrivalNotification];
   }
@@ -260,7 +233,7 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return self.stops.count;
+  return self.trip.stops.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -279,7 +252,7 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
   id cell =[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
   if ([cell isKindOfClass:[BUSStopCell class]]) {
     BUSStopCell *stopCell = cell;
-    BUSStop *stop = self.stops[indexPath.row];
+    BUSStop *stop = self.trip.stops[indexPath.row];
     stopCell.stopName = stop.name;
     
     if (indexPath.row == self.highlight.stop1) {
@@ -333,7 +306,7 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   if (!self.oldSelection || (self.oldSelection.row != indexPath.row)) {
-    BUSStop *destinationStop = self.stops[indexPath.row];
+    BUSStop *destinationStop = self.trip.stops[indexPath.row];
     self.destinationStop = destinationStop;
   }
   self.oldSelection = nil;
