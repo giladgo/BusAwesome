@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSDictionary *tripsByLines;
 @property (nonatomic, strong) NSArray *lines;
 @property (nonatomic, strong) NSDictionary *agencyColorsById;
+@property (nonatomic, weak) UIRefreshControl *refreshControl;
 
 - (NSArray *)getTripsFromSection:(NSInteger)section;
 @end
@@ -38,20 +39,20 @@
   
   [self refresh:nil];
   
+  // Doing this way because the property is weak, so we need a local variable to keep
+  // it in memory until we add it as a subview, which will retain it
   UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
   [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
   [self.tableView addSubview:refreshControl];
+  
+  self.refreshControl = refreshControl;
 }
 
 - (void)refresh:(UIRefreshControl *)refreshControl {
-  
+  [self.refreshControl beginRefreshing];
   [[BUSLocationService sharedInstance] getCurrentLocation:^(CLLocation  *location) {
     [self updateTrips:location.coordinate];
   } withAccuracy:10.0];
-  
-  if (refreshControl) {
-    [refreshControl endRefreshing];
-  }
 }
 
 -(void)initAgencyColors
@@ -83,6 +84,7 @@
     }];
     [self.tableView reloadData];
     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+    [self.refreshControl endRefreshing];
   }];
 }
 
