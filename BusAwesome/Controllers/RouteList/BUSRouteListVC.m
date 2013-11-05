@@ -35,7 +35,7 @@
   self.tableView.delegate = self;
   
   MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-  hud.labelText = @"טוען קוים קרובים...";
+  hud.labelText = @"טוען קווים קרובים...";
   
   [self refresh:nil];
   
