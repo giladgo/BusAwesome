@@ -32,6 +32,7 @@ typedef struct {
 @property (nonatomic) StopHighlight highlight;
 @property (nonatomic, strong) BUSStop *destinationStop;
 @property (nonatomic, strong) BUSLocationService *locationService;
+@property (nonatomic, strong) NSIndexPath *oldSelection;
 @end
 
 @implementation BUSTripVC
@@ -116,7 +117,6 @@ typedef struct {
 
 - (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
 {
-  NSLog(@"Got coordinate: %f, %f", coord.latitude, coord.latitude);
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
   
   NSUInteger afterIndex = [self.stops indexOfObject:@(myProjection)
@@ -198,6 +198,29 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
   return NO;
 }
 
+// determine if we need to send a stop arrival notification, and send it if so (called
+// from setHighlight below)
+- (void) sendArrivalNotificationIfNecessary
+{
+  if (self.highlight.stop2Higlighted) {
+    // case 1 for sending notification - when there is a second stop highlighted
+    // and it's the destination selected by the user (more common)
+    BUSStop *stop2 = self.stops[self.highlight.stop2];
+    if (self.destinationStop && stop2.stopId == self.destinationStop.stopId) {
+      [self sendStopArrivalNotification];
+    }
+  }
+  
+  // case 2 for sending notification - when there is only one stop highlighted and
+  // it's the destination stop. In theory this should happen less, but we add this
+  // here just in case
+  BUSStop *stop1 = self.stops[self.highlight.stop1];
+  if (self.destinationStop && stop1.stopId == self.destinationStop.stopId) {
+    [self sendStopArrivalNotification];
+  }
+
+}
+
 - (void)setHighlight:(StopHighlight)highlight
 {
   if (highlightDiff(highlight, _highlight)) {
@@ -218,6 +241,8 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
       if (_highlight.stop2Higlighted) {
         [indexesToUpdate addObject:[NSIndexPath indexPathForRow:_highlight.stop2 inSection:0]];
       }
+      
+      [self sendArrivalNotificationIfNecessary];
       
       [self.tableView reloadRowsAtIndexPaths:Underscore.array(indexesToUpdate).uniq.unwrap
                             withRowAnimation:UITableViewRowAnimationNone];
@@ -279,7 +304,7 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
   notification.alertBody = [NSString stringWithFormat:@"עוד מעט מגיעים ל%@!", self.destinationStop.name];
   notification.soundName = UILocalNotificationDefaultSoundName;
   [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
-  
+ 
   self.destinationStop = nil;
 }
 
@@ -302,8 +327,17 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  BUSStop *destinationStop = self.stops[indexPath.row];
-  self.destinationStop = destinationStop;
+  if (!self.oldSelection || (self.oldSelection.row != indexPath.row)) {
+    BUSStop *destinationStop = self.stops[indexPath.row];
+    self.destinationStop = destinationStop;
+  }
+  self.oldSelection = nil;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  self.oldSelection = [self.tableView indexPathForSelectedRow];
+  return indexPath;
 }
 
 @end
