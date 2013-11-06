@@ -283,9 +283,14 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
     stopCell.stopName = stop.name;
     
     if (indexPath.row == self.highlight.stop1) {
-      stopCell.highlightMode = StopHighlightModeStopAndBottom;
+      if (self.highlight.stop2Higlighted) {
+        stopCell.highlightMode = StopHighlightModeStopAndBottom;
+      }
+      else {
+        stopCell.highlightMode = StopHighlightModeStop;
+      }
     }
-    else if (indexPath.row == self.highlight.stop2) {
+    else if (self.highlight.stop2Higlighted && indexPath.row == self.highlight.stop2) {
       stopCell.highlightMode = StopHighlightModeStopAndTop;
     }
     else {
