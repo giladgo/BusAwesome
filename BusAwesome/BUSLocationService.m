@@ -30,7 +30,7 @@
 {
   if (self = [super init]) {
 #if TARGET_IPHONE_SIMULATOR
-    self.locationManager = [[IICSimulatedLocationManager alloc] initWithKML:@"bus61"];
+    self.locationManager = [[IICSimulatedLocationManager alloc] initWithKML:@"bus161"];
 #else
     self.locationManager = [[CLLocationManager alloc] init];
 #endif
@@ -85,6 +85,7 @@
                                                             selector:@selector(singleLocationTimeout:)
                                                             userInfo:nil
                                                              repeats:NO];
+    self.singleLocationTimer.tolerance = 0.5; // we're not that pedantic
   [self startUpdatingLocation];
 }
 

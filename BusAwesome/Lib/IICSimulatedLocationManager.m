@@ -32,36 +32,45 @@
       NSLog(@"Error loading KML file: %@", error);
     }
     
-    NSMutableArray *locations = [NSMutableArray new];
+    
     if ([self.kml.feature isKindOfClass:[SimpleKMLDocument class]]) {
       SimpleKMLDocument *doc = (SimpleKMLDocument *)self.kml.feature;
       for (SimpleKMLFeature *feature in doc.features)
       {
         if ([feature isKindOfClass:[SimpleKMLPlacemark class]]) {
-          SimpleKMLPlacemark *placemark = (SimpleKMLPlacemark *)feature;
-          SimpleKMLLineString *lineString;
-          if (placemark.lineString) {
-            lineString = placemark.lineString;
-          }
-          else if (placemark.geometry) {
-            lineString = (SimpleKMLLineString*)placemark.firstGeometry;
-          }
-            
-          for (CLLocation *location in lineString.coordinates) {
-            [locations addObject:location];
-            NSLog(@"IIC Simulated Location Manager adding location: %f, %f", location.coordinate.latitude, location.coordinate.longitude);
-          }
-          
-          self.locations = locations;
-          
+          [self handlePlacemark:(SimpleKMLPlacemark *)feature];
         }
       }
+    }
+    else if ([self.kml.feature isKindOfClass:[SimpleKMLPlacemark class]]) {
+      [self handlePlacemark:(SimpleKMLPlacemark *)self.kml.feature];
     }
     
     self.currentStep = 0;
   }
   
   return self;
+}
+
+- (void) handlePlacemark:(SimpleKMLPlacemark *)placemark
+{
+  NSMutableArray *locations = [NSMutableArray new];
+  
+  SimpleKMLLineString *lineString;
+  if (placemark.lineString) {
+    lineString = placemark.lineString;
+  }
+  else if (placemark.geometry) {
+    lineString = (SimpleKMLLineString*)placemark.firstGeometry;
+  }
+  
+  for (CLLocation *location in lineString.coordinates) {
+    [locations addObject:location];
+    NSLog(@"IIC Simulated Location Manager adding location: %f, %f", location.coordinate.latitude, location.coordinate.longitude);
+  }
+  
+  self.locations = locations;
+
 }
 
 - (void) step
@@ -82,7 +91,7 @@
 {
   if (self.locations) {
     // not calling super on purpose
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(step) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(step) userInfo:nil repeats:YES];
   }
   else {
     [super startUpdatingLocation];

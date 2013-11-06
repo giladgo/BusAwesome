@@ -30,6 +30,7 @@
 		9439AE36182A47B10000A2C6 /* AppIcon76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9439AE2C182A47B10000A2C6 /* AppIcon76x76@2x.png */; };
 		9439AE37182A47B10000A2C6 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 9439AE2D182A47B10000A2C6 /* iTunesArtwork.png */; };
 		9439AE38182A47B10000A2C6 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9439AE2E182A47B10000A2C6 /* iTunesArtwork@2x.png */; };
+		9439AE3A182A4B6E0000A2C6 /* bus161.kml in Resources */ = {isa = PBXBuildFile; fileRef = 9439AE39182A4B6E0000A2C6 /* bus161.kml */; };
 		946FD0981826513E00ADD588 /* BUSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0971826513E00ADD588 /* BUSLocationService.m */; };
 		946FD0A618268EC100ADD588 /* IICSimulatedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */; };
 		946FD0A818269DFC00ADD588 /* bus61.kml in Resources */ = {isa = PBXBuildFile; fileRef = 946FD0A718269DFC00ADD588 /* bus61.kml */; };
@@ -108,6 +109,7 @@
 		9439AE2C182A47B10000A2C6 /* AppIcon76x76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon76x76@2x.png"; path = "BusAwesome/Resources/AppIcons/AppIcon76x76@2x.png"; sourceTree = SOURCE_ROOT; };
 		9439AE2D182A47B10000A2C6 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iTunesArtwork.png; path = BusAwesome/Resources/AppIcons/iTunesArtwork.png; sourceTree = SOURCE_ROOT; };
 		9439AE2E182A47B10000A2C6 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "BusAwesome/Resources/AppIcons/iTunesArtwork@2x.png"; sourceTree = SOURCE_ROOT; };
+		9439AE39182A4B6E0000A2C6 /* bus161.kml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = bus161.kml; path = Resources/bus161.kml; sourceTree = "<group>"; };
 		946FD0961826513E00ADD588 /* BUSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUSLocationService.h; sourceTree = "<group>"; };
 		946FD0971826513E00ADD588 /* BUSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BUSLocationService.m; sourceTree = "<group>"; };
 		946FD0A418268EC100ADD588 /* IICSimulatedLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IICSimulatedLocationManager.h; path = Lib/IICSimulatedLocationManager.h; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		66BA17EE18267FA500E4397E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9439AE39182A4B6E0000A2C6 /* bus161.kml */,
 				9439AE10182A40740000A2C6 /* AppIcons */,
 				946FD0A718269DFC00ADD588 /* bus61.kml */,
 				66BA17EF18267FD400E4397E /* agency-colors.plist */,
@@ -533,6 +536,7 @@
 				94F871791820065800911620 /* Top.storyboard in Resources */,
 				9439AE33182A47B10000A2C6 /* AppIcon60x60.png in Resources */,
 				946FD0A818269DFC00ADD588 /* bus61.kml in Resources */,
+				9439AE3A182A4B6E0000A2C6 /* bus161.kml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
