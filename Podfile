@@ -6,4 +6,6 @@ pod "ShapeKit"
 pod "HexColors"
 pod "Simple-KML"
 pod "MBProgressHUD"
-pod "Kiwi"
+target :BusAwesomeTests, :exclusive => true do
+  pod 'Kiwi/XCTest'
+end

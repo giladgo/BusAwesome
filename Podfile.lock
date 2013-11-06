@@ -4,11 +4,9 @@ PODS:
   - HexColors (2.2.1)
   - ISO8601DateFormatterValueTransformer (0.5.0):
     - RKValueTransformers (~> 1.0.0)
-  - Kiwi (2.2.3):
-    - Kiwi/SenTestingKit
   - Kiwi/ARC (2.2.3)
   - Kiwi/NonARC (2.2.3)
-  - Kiwi/SenTestingKit (2.2.3):
+  - Kiwi/XCTest (2.2.3):
     - Kiwi/ARC
     - Kiwi/NonARC
   - MBProgressHUD (0.8)
@@ -46,7 +44,7 @@ PODS:
 
 DEPENDENCIES:
   - HexColors
-  - Kiwi
+  - Kiwi/XCTest
   - MBProgressHUD
   - RestKit
   - ShapeKit

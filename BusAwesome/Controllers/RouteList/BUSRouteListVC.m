@@ -14,9 +14,8 @@
 #import "BUSTripVC.h"
 #import <MBProgressHUD.h>
 #import "BUSRouteListSectionHeader.h"
-
-#define SECTION_HEADER_HEIGHT 42
-#define CELL_ROW_HEIGHT 44
+#import <Underscore.h>
+#define _ Underscore
 
 @interface BUSRouteListVC ()
 @property (nonatomic, strong) NSDictionary *tripsByLines;
@@ -33,14 +32,19 @@
 
 - (void)viewDidLoad
 {
-  self.didLoadDataForTheFirstTime = false;
-  [self initAgencyColors];
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
-  
   self.locationService = [BUSLocationService new];
-  [self refresh:nil];
+  
+  [self initAgencyColors];
   [self initRefreshControl];
+  [self initRouteListData];
+}
+
+- (void)initRouteListData
+{
+  self.didLoadDataForTheFirstTime = false;
+  [self refresh:nil];
 }
 
 - (void)initRefreshControl
@@ -52,6 +56,12 @@
   [self.tableView addSubview:refreshControl];
   [self showHUD:YES];
   self.refreshControl = refreshControl;
+}
+
+-(void)initAgencyColors
+{
+  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"agency-colors" ofType:@"plist"];
+  self.agencyColorsById = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
 }
 
 - (void)showHUD:(BOOL)show
@@ -69,12 +79,6 @@
   [self.locationService getCurrentLocation:^(CLLocation  *location) {
     [self updateTrips:location.coordinate];
   } withAccuracy:10.0];
-}
-
--(void)initAgencyColors
-{
-  NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"agency-colors" ofType:@"plist"];
-  self.agencyColorsById = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
 }
 
 -(void)updateTrips:(CLLocationCoordinate2D)coordinate
@@ -140,13 +144,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  if (self.lines.count == 0) return tableView.frame.size.height - self.refreshControl.frame.size.height;
+  if (![self hasLines]) return [[self tableViewHeight] integerValue];
   return CELL_ROW_HEIGHT;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-  if (self.lines.count == 0) return 0;
+  if (![self hasLines]) return 0;
   return SECTION_HEADER_HEIGHT;
 }
 
@@ -188,6 +192,16 @@
   
   NSString *lineName = self.lines[section];
   return self.tripsByLines[lineName];
+}
+
+- (BOOL)hasLines
+{
+  return self.lines.count > 0;
+}
+
+- (NSNumber *)tableViewHeight
+{
+  return @(self.tableView.frame.size.height - self.refreshControl.frame.size.height);
 }
 
 @end

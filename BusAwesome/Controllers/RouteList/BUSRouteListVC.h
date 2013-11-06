@@ -12,4 +12,7 @@
 @interface BUSRouteListVC : UIViewController<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+#define SECTION_HEADER_HEIGHT 42
+#define CELL_ROW_HEIGHT 44
+
 @end
