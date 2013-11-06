@@ -53,4 +53,10 @@
   }
 }
 
+- (void)setTerminusType:(StopTerminusType)terminusType
+{
+  _terminusType = terminusType;
+  self.stopWidget.terminusType = terminusType;
+}
+
 @end

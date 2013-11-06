@@ -14,5 +14,6 @@
 @property (nonatomic, strong) NSString *stopName;
 @property (nonatomic) NSInteger minutesAway;
 @property (nonatomic) StopHighlightMode highlightMode;
+@property (nonatomic) StopTerminusType terminusType;
 
 @end

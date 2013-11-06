@@ -42,28 +42,32 @@
   
 
   // Top Line
-  if (self.highlightMode == StopHighlightModeStopAndTop) {
-    CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+  if (self.terminusType != StopTerminusTypeStart) {
+    if (self.highlightMode == StopHighlightModeStopAndTop) {
+      CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+    }
+    else {
+      CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
+    }
+    CGContextSetLineWidth(ctx, 6);
+    CGContextMoveToPoint(ctx, center.x, center.y - radius);
+    CGContextAddLineToPoint(ctx, center.x, 0.0);
+    CGContextStrokePath(ctx);
   }
-  else {
-    CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
-  }
-  CGContextSetLineWidth(ctx, 6);
-  CGContextMoveToPoint(ctx, center.x, center.y - radius);
-  CGContextAddLineToPoint(ctx, center.x, 0.0);
-  CGContextStrokePath(ctx);
   
   // Bottom Line
-  if (self.highlightMode == StopHighlightModeStopAndBottom) {
-    CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+  if (self.terminusType != StopTerminusTypeEnd) {
+    if (self.highlightMode == StopHighlightModeStopAndBottom) {
+      CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+    }
+    else {
+      CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
+    }
+    CGContextSetLineWidth(ctx, 6);
+    CGContextMoveToPoint(ctx, center.x, center.y + radius);
+    CGContextAddLineToPoint(ctx, center.x, rect.size.height);
+    CGContextStrokePath(ctx);
   }
-  else {
-    CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
-  }
-  CGContextSetLineWidth(ctx, 6);
-  CGContextMoveToPoint(ctx, center.x, center.y + radius);
-  CGContextAddLineToPoint(ctx, center.x, rect.size.height);
-  CGContextStrokePath(ctx);
   
   // Inner circle
   if (self.highlightMode != StopHighlightModeNone) {

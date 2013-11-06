@@ -15,8 +15,14 @@ typedef enum StopHighlightMode : NSUInteger {
   StopHighlightModeStopAndBottom
 } StopHighlightMode;
 
+typedef enum StopTerminusType : NSUInteger {
+  StopTerminusTypeNone,
+  StopTerminusTypeStart,
+  StopTerminusTypeEnd
+} StopTerminusType;
 @interface BUSStopWidget : UIView
 
 @property (nonatomic) StopHighlightMode highlightMode;
+@property (nonatomic) StopTerminusType terminusType;
 
 @end

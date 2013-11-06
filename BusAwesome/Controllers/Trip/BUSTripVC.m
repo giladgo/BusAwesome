@@ -256,6 +256,37 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
   return NO;
 }
 
+-(void) setHighlightingForCell:(BUSStopCell *)stopCell withIndexPath:(NSIndexPath*)indexPath
+{
+  if (indexPath.row == self.highlight.stop1) {
+    if (self.highlight.stop2Higlighted) {
+      stopCell.highlightMode = StopHighlightModeStopAndBottom;
+    }
+    else {
+      stopCell.highlightMode = StopHighlightModeStop;
+    }
+  }
+  else if (self.highlight.stop2Higlighted && indexPath.row == self.highlight.stop2) {
+    stopCell.highlightMode = StopHighlightModeStopAndTop;
+  }
+  else {
+    stopCell.highlightMode = StopHighlightModeNone;
+  }
+}
+
+- (void) setTerminusForCell:(BUSStopCell *)stopCell withIndexPath:(NSIndexPath*)indexPath
+{
+  if (indexPath.row == 0) {
+    stopCell.terminusType = StopTerminusTypeStart;
+  }
+  else if (indexPath.row == (self.trip.stops.count - 1)) {
+    stopCell.terminusType = StopTerminusTypeEnd;
+  }
+  else {
+    stopCell.terminusType = StopTerminusTypeNone;
+  }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   static NSString *cellIdentifier = @"BusStop";
@@ -263,22 +294,10 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
   if ([cell isKindOfClass:[BUSStopCell class]]) {
     BUSStopCell *stopCell = cell;
     BUSStop *stop = self.trip.stops[indexPath.row];
+
     stopCell.stopName = stop.name;
-    
-    if (indexPath.row == self.highlight.stop1) {
-      if (self.highlight.stop2Higlighted) {
-        stopCell.highlightMode = StopHighlightModeStopAndBottom;
-      }
-      else {
-        stopCell.highlightMode = StopHighlightModeStop;
-      }
-    }
-    else if (self.highlight.stop2Higlighted && indexPath.row == self.highlight.stop2) {
-      stopCell.highlightMode = StopHighlightModeStopAndTop;
-    }
-    else {
-      stopCell.highlightMode = StopHighlightModeNone;
-    }
+    [self setHighlightingForCell:stopCell withIndexPath:indexPath];
+    [self setTerminusForCell:stopCell withIndexPath:indexPath];
     
     return stopCell;
   }
