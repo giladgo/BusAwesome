@@ -96,7 +96,7 @@
   
   if (_locationRefCount == 1) {
     if ([CLLocationManager locationServicesEnabled]) {
-      NSLog(@"BUSLS sgtarting");
+      NSLog(@"BUSLS starting");
       [self.locationManager startUpdatingLocation];
     }
     else {
