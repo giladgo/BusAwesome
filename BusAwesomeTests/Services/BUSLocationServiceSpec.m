@@ -46,53 +46,6 @@ describe(@"BusLocationService", ^{
     });
     
   });
-
-  describe(@"startUpdatingLocation", ^{
-    
-    __block NSArray *_locations;
-    
-    it(@"should get some locations and stop when asked", ^{
-      
-      id locationDelegateMock = [KWMock mockForProtocol:@protocol(BUSLocationServiceDelegate)];
-      [locationDelegateMock stub:NSSelectorFromString(@"didUpdateLocations:") withBlock:^id(NSArray *params) {
-        _locations = (NSArray*)params[0];
-        return nil;
-      }];
-      
-      [subject startUpdatingLocation];
-      
-      [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3.0]];
-      
-      [[locationDelegateMock shouldEventuallyBeforeTimingOutAfter(3.0)] receive:NSSelectorFromString(@"didUpdateLocations:")];
-      [[expectFutureValue(_locations) shouldEventually] beNonNil];
-      [[expectFutureValue(@(_locations.count)) shouldEventually] beGreaterThanOrEqualTo:@2];
-      
-      [subject stopUpdatingLocation];
-    });
-    
-    it (@"should stop getting locations on request", ^{
-      __block BOOL fail = NO;
-
-      [locationDelegateMock stub:NSSelectorFromString(@"didUpdateLocations:") withBlock:^id(NSArray *params) {
-        fail = YES;
-        return nil;
-      }];
-      
-      [subject startUpdatingLocation];
-
-      [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:3.0]];
-      
-      fail = NO;
-      [subject stopUpdatingLocation];
-
-
-      [[theValue(fail) shouldNot] beTrue];
-      
-
-    });
-    
-
-  });
   
   
 });
