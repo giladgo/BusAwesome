@@ -34,7 +34,7 @@
 {
   self.tableView.dataSource = self;
   self.tableView.delegate = self;
-  self.locationService = [BUSLocationService new];
+  self.locationService = [[BUSLocationService alloc] initWithName:@"RouteList LS"];
   
   [self initAgencyColors];
   [self initRefreshControl];

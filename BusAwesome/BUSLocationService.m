@@ -11,24 +11,22 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-@interface BUSLocationService() <CLLocationManagerDelegate> {
-  
-  // This is simple 'reference' counter which counts how many times 'startLocationUpdates'
-  // was called vs. how many times 'stopLocatiopnUpdates' was called.
-  int _locationRefCount;
-}
+@interface BUSLocationService() <CLLocationManagerDelegate>
+
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, copy) LocationBlock singleLocationCallback;
 @property (nonatomic) double singleLocationAccuracy;
 @property (nonatomic, strong) NSTimer *singleLocationTimer;
 @property (nonatomic, strong) CLLocation *singleLocation;
+@property (strong, nonatomic, readwrite) NSString *name;
 @end
 
 @implementation BUSLocationService
 
-- (id)init
+- (id)initWithName:(NSString *)name
 {
   if (self = [super init]) {
+    self.name = name;
 #if TARGET_IPHONE_SIMULATOR
     self.locationManager = [[IICSimulatedLocationManager alloc] initWithKML:@"bus161"];
 #else
@@ -46,6 +44,7 @@
   
   if (self.singleLocationCallback) {
     CLLocation *location = [locations firstObject]; // usually the first one is good enough
+
     NSLog(@"Did update location, acc %f, r_acc %f loc_count %d", location.horizontalAccuracy, self.singleLocationAccuracy, locations.count);
     self.singleLocation = location;
     if (location.horizontalAccuracy <= self.singleLocationAccuracy) {
@@ -56,7 +55,7 @@
 
 - (void)fireSingleLocationCallback
 {
-  NSLog(@"Firing single location callback");
+  NSLog(@"[%@] Firing single location callback - %f %f", self.name, self.singleLocation.coordinate.latitude, self.singleLocation.coordinate.longitude);
   [self stopUpdatingLocation];
   self.singleLocationCallback(self.singleLocation);
 
@@ -74,6 +73,7 @@
 
 - (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy withTimeout:(NSTimeInterval)timeout
 {
+  NSLog(@"[%@] Single location request", self.name);
   self.singleLocationCallback = callback;
   self.singleLocationAccuracy = accuracy;
   if (self.singleLocationTimer) {
@@ -91,34 +91,14 @@
 
 - (void)startUpdatingLocation
 {
-  _locationRefCount++;
-  NSLog(@"BUSLS rc = %d", _locationRefCount);
-  
-  if (_locationRefCount == 1) {
-    if ([CLLocationManager locationServicesEnabled]) {
-      NSLog(@"BUSLS starting");
-      [self.locationManager startUpdatingLocation];
-    }
-    else {
-      NSLog(@"Location services disabled.");
-    }
-  }
+  NSLog(@"[%@] Start updating location", self.name);
+  [self.locationManager startUpdatingLocation];
 }
 
 - (void)stopUpdatingLocation
 {
-  if (_locationRefCount > 0) {
-    _locationRefCount--;
-    
-    NSLog(@"BUSLS rc = %d", _locationRefCount);
-    
-    if (_locationRefCount == 0) {
-      if ([CLLocationManager locationServicesEnabled]) {
-        NSLog(@"BUSLS stopping");
-        [self.locationManager stopUpdatingLocation];
-      }
-    }
-  }
+  NSLog(@"[%@] Stop updating location", self.name);
+  [self.locationManager stopUpdatingLocation];
   
 }
 

@@ -50,7 +50,8 @@
 @property (nonatomic, strong) BUSTrip *trip;
 @property (nonatomic) StopHighlight *highlight;
 @property (nonatomic, strong) BUSStop *destinationStop;
-@property (nonatomic, strong) BUSLocationService *locationService;
+@property (nonatomic, strong) BUSLocationService *trackingLocationService;
+@property (nonatomic, strong) BUSLocationService *notificationLocationService;
 @property (nonatomic, strong) NSIndexPath *oldSelection;
 @property (nonatomic, strong) NSMutableArray *stopsBySection;
 @end
@@ -67,8 +68,11 @@
   MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
   hud.labelText = @"טוען תחנות...";
   
-  self.locationService = [BUSLocationService new];
-  self.locationService.delegate = self;
+  self.trackingLocationService = [[BUSLocationService alloc] initWithName:@"Tracking LS"];
+  self.trackingLocationService.delegate = self;
+  self.notificationLocationService = [[BUSLocationService alloc] initWithName:@"Notification LS"];
+  self.notificationLocationService.delegate = self;
+  
   [self setupNotifications];
   
   self.stopsBySection = [NSMutableArray new];
@@ -89,7 +93,7 @@
         [self calcSections];
         [self.tableView reloadData];
         
-        [self.locationService startUpdatingLocation];
+        [self.trackingLocationService startUpdatingLocation];
       });
     });
     
@@ -137,12 +141,12 @@
 
 - (void)appHasGoneInBackground:(NSNotification *)notification
 {
-  [self.locationService stopUpdatingLocation];
+  [self.trackingLocationService stopUpdatingLocation];
 }
 
 - (void)appWillGoToForeground:(NSNotification *)notification
 {
-  [self.locationService startUpdatingLocation];
+  [self.trackingLocationService startUpdatingLocation];
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -154,6 +158,7 @@
 {
   [super viewDidDisappear:animated];
   [self teardownNotifications];
+  [self.trackingLocationService stopUpdatingLocation];
 }
 
 - (NSIndexPath *) indexPathOfStop:(BUSStop *)stop
@@ -412,10 +417,10 @@ BOOL highlightDiff(StopHighlight *h1, StopHighlight *h2) {
 - (void)setDestinationStop:(BUSStop *)destinationStop
 {
   if (destinationStop) {
-    [self.locationService startUpdatingLocation];
+    [self.notificationLocationService startUpdatingLocation];
   }
   else {
-    [self.locationService stopUpdatingLocation];
+    [self.notificationLocationService stopUpdatingLocation];
   }
   _destinationStop = destinationStop;
 }

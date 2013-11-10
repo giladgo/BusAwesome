@@ -20,6 +20,9 @@ typedef void (^LocationBlock)(CLLocation *location);
 @interface BUSLocationService : NSObject
 
 @property id<BUSLocationServiceDelegate> delegate;
+@property (strong, nonatomic, readonly) NSString *name;
+
+- (id)initWithName:(NSString*)name;
 
 - (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy withTimeout:(NSTimeInterval)timeout;
 
