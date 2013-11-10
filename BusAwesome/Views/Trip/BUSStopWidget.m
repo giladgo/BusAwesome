@@ -28,10 +28,6 @@
   [self setNeedsDisplay];
 }
 
-#define HIGHLIGHT_COLOR 0.0,0.615686275,0.862745098
-#define VISITED_COLOR 0.8,0.8,0.8
-
-
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
@@ -59,7 +55,7 @@
       [[UIColor blackColor] setStroke];
     }
     CGContextSetLineWidth(ctx, 6);
-    CGContextMoveToPoint(ctx, center.x, center.y - radius);giu
+    CGContextMoveToPoint(ctx, center.x, center.y - radius);
     CGContextAddLineToPoint(ctx, center.x, 0.0);
     CGContextStrokePath(ctx);
   }
