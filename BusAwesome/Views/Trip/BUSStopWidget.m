@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Gilad Goldberg. All rights reserved.
 //
 
+#import <HexColor.h>
+
 #import "BUSStopWidget.h"
 
 @implementation BUSStopWidget
@@ -40,23 +42,24 @@
   
   float radius = rect.size.height * 0.25f;
   CGPoint center = CGPointMake(rect.size.width / 2.0f, rect.size.height / 2.0f);
-  
+  UIColor *highlightColor = [UIColor colorWithHexString:@"009ddc" alpha:1.0];
+  UIColor *visitedColor = [UIColor colorWithHexString:@"ccc" alpha:1.0];
 
   // Top Line
   if (self.terminusType != StopTerminusTypeStart) {
     if (self.highlightMode == StopHighlightModeStopAndTop) {
-      CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+      [highlightColor setStroke];
     }
     else if (self.highlightMode == StopHighlightModeVisited ||
              self.highlightMode == StopHighlightModeStopAndBottom ||
              self.highlightMode == StopHighlightModeStop){
-      CGContextSetRGBStrokeColor(ctx,VISITED_COLOR,1.0);
+      [visitedColor setStroke];
     }
     else {
-      CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
+      [[UIColor blackColor] setStroke];
     }
     CGContextSetLineWidth(ctx, 6);
-    CGContextMoveToPoint(ctx, center.x, center.y - radius);
+    CGContextMoveToPoint(ctx, center.x, center.y - radius);giu
     CGContextAddLineToPoint(ctx, center.x, 0.0);
     CGContextStrokePath(ctx);
   }
@@ -64,13 +67,13 @@
   // Bottom Line
   if (self.terminusType != StopTerminusTypeEnd) {
     if (self.highlightMode == StopHighlightModeStopAndBottom) {
-      CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+      [highlightColor setStroke];
     }
     else if (self.highlightMode == StopHighlightModeVisited){
-      CGContextSetRGBStrokeColor(ctx,VISITED_COLOR,1.0);
+      [visitedColor setStroke];
     }
     else {
-      CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
+      [[UIColor blackColor] setStroke];
     }
     CGContextSetLineWidth(ctx, 6);
     CGContextMoveToPoint(ctx, center.x, center.y + radius);
@@ -82,13 +85,13 @@
   if (self.highlightMode == StopHighlightModeStopAndBottom ||
       self.highlightMode == StopHighlightModeStopAndTop ||
       self.highlightMode == StopHighlightModeStop) {
-    CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+    [highlightColor setStroke];
   }
   else if (self.highlightMode == StopHighlightModeVisited){
-    CGContextSetRGBStrokeColor(ctx,VISITED_COLOR,1.0);
+    [visitedColor setStroke];
   }
   else {
-    CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
+    [[UIColor blackColor] setStroke];
   }
   CGContextSetLineWidth(ctx,4);
   
