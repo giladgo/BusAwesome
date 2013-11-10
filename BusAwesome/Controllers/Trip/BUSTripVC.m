@@ -59,9 +59,9 @@ typedef struct {
     // Calculating the projection for all stops takes a really really long time (> 1s), so we're doing
     // it asynchronously.
     dispatch_async(_projCalcQ, ^{
-      for (BUSStop *stop in self.trip.stops) {
+      Underscore.arrayEach(self.trip.stops, ^(BUSStop* stop) {
         stop.trip = trip;
-      }
+      });
       dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
         
@@ -111,18 +111,13 @@ typedef struct {
 }
 
 
-- (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
+#define CLOSE_ENOUGH_TO_STOP 0.0001
+- (void) updateHighlightFromLocation:(CLLocationCoordinate2D)coord
+                                 withPrevStop:(BUSStop*)prevStop
+                                 andAfterStop:(BUSStop*)afterStop
 {
-  BUSStop *prevStop;
-  BUSStop *afterStop;
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
   
-  [self.trip getBoundingStops:coord.latitude
-                          lon:coord.longitude
-                    afterStop:&afterStop
-                     prevStop:&prevStop];
-  
-#define CLOSE_ENOUGH_TO_STOP 0.0001
   StopHighlight highlight;
   // if we are too close to either stations, highlight it only
   if (fabsf(prevStop.projectionOnTrip - myProjection) < CLOSE_ENOUGH_TO_STOP ) {
@@ -138,9 +133,24 @@ typedef struct {
     highlight.stop2 = [self.trip indexOfStop:afterStop];
     highlight.stop2Higlighted = YES;
   }
-  
+
   self.highlight = highlight;
+}
+
+- (void) updateUIFromLocation:(CLLocationCoordinate2D)coord
+{
+  BUSStop *prevStop;
+  BUSStop *afterStop;
   
+  [self.trip getBoundingStops:coord.latitude
+                          lon:coord.longitude
+                    afterStop:&afterStop
+                     prevStop:&prevStop];
+  
+  [self updateHighlightFromLocation:coord
+                       withPrevStop:prevStop
+                       andAfterStop:afterStop];
+
   // Doing this here and not in the end of viewDidLoad because we want to
   // hide the progress HUD only after the first location has arrived
   // (and not when finished loading the stops)
