@@ -12,7 +12,8 @@ typedef enum StopHighlightMode : NSUInteger {
   StopHighlightModeNone,
   StopHighlightModeStop,
   StopHighlightModeStopAndTop,
-  StopHighlightModeStopAndBottom
+  StopHighlightModeStopAndBottom,
+  StopHighlightModeVisited
 } StopHighlightMode;
 
 typedef enum StopTerminusType : NSUInteger {

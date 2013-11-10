@@ -27,6 +27,7 @@
 }
 
 #define HIGHLIGHT_COLOR 0.0,0.615686275,0.862745098
+#define VISITED_COLOR 0.8,0.8,0.8
 
 
 // Only override drawRect: if you perform custom drawing.
@@ -46,6 +47,11 @@
     if (self.highlightMode == StopHighlightModeStopAndTop) {
       CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
     }
+    else if (self.highlightMode == StopHighlightModeVisited ||
+             self.highlightMode == StopHighlightModeStopAndBottom ||
+             self.highlightMode == StopHighlightModeStop){
+      CGContextSetRGBStrokeColor(ctx,VISITED_COLOR,1.0);
+    }
     else {
       CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
     }
@@ -60,6 +66,9 @@
     if (self.highlightMode == StopHighlightModeStopAndBottom) {
       CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
     }
+    else if (self.highlightMode == StopHighlightModeVisited){
+      CGContextSetRGBStrokeColor(ctx,VISITED_COLOR,1.0);
+    }
     else {
       CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);
     }
@@ -70,8 +79,13 @@
   }
   
   // Inner circle
-  if (self.highlightMode != StopHighlightModeNone) {
+  if (self.highlightMode == StopHighlightModeStopAndBottom ||
+      self.highlightMode == StopHighlightModeStopAndTop ||
+      self.highlightMode == StopHighlightModeStop) {
     CGContextSetRGBStrokeColor(ctx,HIGHLIGHT_COLOR,1.0);
+  }
+  else if (self.highlightMode == StopHighlightModeVisited){
+    CGContextSetRGBStrokeColor(ctx,VISITED_COLOR,1.0);
   }
   else {
     CGContextSetRGBStrokeColor(ctx,0.0,0.0,0.0,1.0);

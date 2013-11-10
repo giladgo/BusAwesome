@@ -45,11 +45,20 @@
   _highlightMode = highlightMode;
   self.stopWidget.highlightMode = highlightMode;
   
-  if (_highlightMode != StopHighlightModeNone) {
+  if (_highlightMode == StopHighlightModeStopAndBottom ||
+      _highlightMode == StopHighlightModeStopAndTop ||
+      _highlightMode == StopHighlightModeStop) {
     self.backgroundColor = [UIColor colorWithHexString:@"ddeeff" alpha:1.0];
   }
   else {
     self.backgroundColor = [UIColor whiteColor];
+  }
+  
+  if (self.highlightMode == StopHighlightModeVisited) {
+    self.stopNameLabel.textColor = [UIColor colorWithHexString:@"cccccc" alpha:1.0];
+  }
+  else {
+    self.stopNameLabel.textColor = [UIColor blackColor];
   }
 }
 
@@ -58,5 +67,4 @@
   _terminusType = terminusType;
   self.stopWidget.terminusType = terminusType;
 }
-
 @end

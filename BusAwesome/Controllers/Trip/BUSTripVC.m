@@ -225,6 +225,11 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
         [indexesToUpdate addObject:[NSIndexPath indexPathForRow:_highlight.stop2 inSection:0]];
       }
       
+      // Also update all visited stops
+      for (int i = 0; i < _highlight.stop1; i++) {
+        [indexesToUpdate addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+      }
+      
       [self sendArrivalNotificationIfNecessary];
       
       [self.tableView reloadRowsAtIndexPaths:Underscore.array(indexesToUpdate).uniq.unwrap
@@ -258,7 +263,10 @@ BOOL highlightDiff(StopHighlight h1, StopHighlight h2) {
 
 -(void) setHighlightingForCell:(BUSStopCell *)stopCell withIndexPath:(NSIndexPath*)indexPath
 {
-  if (indexPath.row == self.highlight.stop1) {
+  if (indexPath.row < self.highlight.stop1) {
+    stopCell.highlightMode = StopHighlightModeVisited;
+  }
+  else if (indexPath.row == self.highlight.stop1) {
     if (self.highlight.stop2Higlighted) {
       stopCell.highlightMode = StopHighlightModeStopAndBottom;
     }
