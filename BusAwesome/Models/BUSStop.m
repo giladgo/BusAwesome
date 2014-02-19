@@ -20,6 +20,7 @@
                                                      @"description":     @"description",
                                                      @"lat":     @"lat",
                                                      @"lon":     @"lon",
+                                                     @"city":     @"city",
                                                   }];
   return stopMapping;
 }

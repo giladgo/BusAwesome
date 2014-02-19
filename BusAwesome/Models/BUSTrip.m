@@ -81,7 +81,6 @@ NSComparisonResult stopProjectionComparator(id obj1, id obj2)
                                          usingComparator:^NSComparisonResult(id obj1, id obj2) {
                                            return stopProjectionComparator(obj1, obj2);
                                          }];
-  
   *afterStop = self.stops[afterIndex];
   *prevStop = self.stops[afterIndex - 1];
 }

@@ -8,13 +8,21 @@
 
 #import "BUSAppDelegate.h"
 #import "BUSLocationService.h"
+#import <PonyDebugger/PonyDebugger.h>
 
 @implementation BUSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    return YES;
+  // Override point for customization after application launch.
+  
+#if TARGET_IPHONE_SIMULATOR
+  PDDebugger *debugger = [PDDebugger defaultInstance];
+  [debugger connectToURL:[NSURL URLWithString:@"ws://localhost:9000/device"]];
+  [debugger enableViewHierarchyDebugging];
+#endif
+
+  return YES;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -18,6 +18,7 @@
 @property (nonatomic, copy) NSString *description;
 @property (nonatomic, copy) NSNumber *lat;
 @property (nonatomic, copy) NSNumber *lon;
+@property (nonatomic, copy) NSString *city;
 
 +(RKObjectMapping *)rkMapping;
 @end

@@ -1,6 +1,6 @@
 PODS:
   - AFNetworking (1.3.3)
-  - geos (3.3.8)
+  - geos (3.4.2)
   - HexColors (2.2.1)
   - ISO8601DateFormatterValueTransformer (0.5.0):
     - RKValueTransformers (~> 1.0.0)
@@ -11,6 +11,8 @@ PODS:
     - Kiwi/NonARC
   - MBProgressHUD (0.8)
   - objective-zip (0.0.1)
+  - PonyDebugger (0.3.1):
+    - SocketRocket
   - proj4 (4.8.0)
   - RestKit (0.21.0):
     - RestKit/Core
@@ -30,13 +32,14 @@ PODS:
     - RKValueTransformers (~> 1.0.0)
   - RestKit/Support (0.21.0):
     - TransitionKit (= 1.1.1)
-  - RKValueTransformers (1.0.0)
+  - RKValueTransformers (1.0.1)
   - ShapeKit (0.9.1):
     - geos
     - proj4
   - Simple-KML (0.1.0):
     - objective-zip (= 0.0.1)
     - TouchXML
+  - SocketRocket (0.3.1-beta2)
   - SOCKit (1.1)
   - TouchXML (0.1)
   - TransitionKit (1.1.1)
@@ -46,27 +49,30 @@ DEPENDENCIES:
   - HexColors
   - Kiwi/XCTest
   - MBProgressHUD
+  - PonyDebugger (~> 0.3.1)
   - RestKit
   - ShapeKit
   - Simple-KML
   - Underscore.m
 
 SPEC CHECKSUMS:
-  AFNetworking: 0700ec7a58c36ad217173e167f6e4df7270df66b
-  geos: 77cb2c6d740e6170d7517f55f7a0f2ea12d9f120
+  AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
+  geos: c30b7cd8a4278f82e92fc3d1fb551447fa8f25fc
   HexColors: 3a68db077cd6572a8f7d4aa1add284dd2436a934
   ISO8601DateFormatterValueTransformer: d0af1f50a9df42db72d7418db31938b8473e0af8
   Kiwi: 04c51e880831d291748ec702d42c4101f7eb95c9
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
   objective-zip: 36c878cd9831e1cef61a23d61081b3af1334fb6b
-  proj4: ed2f1de3bd3a8ed5896f55553429e8122aee2d21
+  PonyDebugger: d31607145d785b2315cd6f6a4ebaa378eb0c1340
+  proj4: 7bd3ffdb0821596870e2812f2f8c54da2fcb535d
   RestKit: c11a30e7bc73513d9d2c2695672aba7697d24181
-  RKValueTransformers: 01dc043fd853f6e40459b2e732dff545298a0f91
-  ShapeKit: 50f539279057cdcee89aea6bd580072249c8753a
+  RKValueTransformers: 1562d458b9c9d59ce777bfc5982f2e1aef2e9182
+  ShapeKit: 9487827cb827986263315f3458647658423ad3f2
   Simple-KML: e9e03cd29ea584aca39b4366eaa5f226e74bc6ec
+  SocketRocket: 7ac946bcce46287a791dfff3c1f8daa692821dae
   SOCKit: 2f3bc4d07910de12dcc202815e07db68a3802581
   TouchXML: 0fb977f0bdd2ce2e5d0790c80751769459708810
   TransitionKit: d0e3344aac92991395d4c2e72d9c5a8ceeb12910
   Underscore.m: 593ea54a19d3cc4439387a83d36eb7ba6ffd1707
 
-COCOAPODS: 0.27.1
+COCOAPODS: 0.29.0

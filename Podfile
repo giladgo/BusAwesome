@@ -6,6 +6,10 @@ pod "ShapeKit"
 pod "HexColors"
 pod "Simple-KML"
 pod "MBProgressHUD"
+
+# TODO make this in a debug target or something
+pod 'PonyDebugger', '~> 0.3.1'
+
 target :BusAwesomeTests, :exclusive => true do
   pod 'Kiwi/XCTest'
 end

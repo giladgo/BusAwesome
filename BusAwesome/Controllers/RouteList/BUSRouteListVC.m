@@ -78,7 +78,7 @@
   [self.refreshControl beginRefreshing];
   [self.locationService getCurrentLocation:^(CLLocation  *location) {
     [self updateTrips:location.coordinate];
-  } withAccuracy:10.0];
+  } withAccuracy:20.0 withTimeout:1.5];
 }
 
 -(void)updateTrips:(CLLocationCoordinate2D)coordinate

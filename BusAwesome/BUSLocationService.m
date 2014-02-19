@@ -20,6 +20,8 @@
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, copy) LocationBlock singleLocationCallback;
 @property (nonatomic) double singleLocationAccuracy;
+@property (nonatomic, strong) NSTimer *singleLocationTimer;
+@property (nonatomic, strong) CLLocation *singleLocation;
 @end
 
 @implementation BUSLocationService
@@ -44,19 +46,45 @@
   
   if (self.singleLocationCallback) {
     CLLocation *location = [locations firstObject]; // usually the first one is good enough
-    if (location.horizontalAccuracy <= self.singleLocationAccuracy || location.verticalAccuracy <= self.singleLocationAccuracy) {
-      NSLog(@"Firing single location callback");
-      [self stopUpdatingLocation];
-      self.singleLocationCallback(location);
-      self.singleLocationCallback = nil;
+    NSLog(@"Did update location, acc %f, r_acc %f loc_count %d", location.horizontalAccuracy, self.singleLocationAccuracy, locations.count);
+    self.singleLocation = location;
+    if (location.horizontalAccuracy <= self.singleLocationAccuracy) {
+      [self fireSingleLocationCallback];
     }
   }
 }
 
-- (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy
+- (void)fireSingleLocationCallback
+{
+  NSLog(@"Firing single location callback");
+  [self stopUpdatingLocation];
+  self.singleLocationCallback(self.singleLocation);
+
+  self.singleLocationCallback = nil;
+  self.singleLocation = nil;
+  [self.singleLocationTimer invalidate];
+  self.singleLocationTimer = nil;
+}
+
+- (void)singleLocationTimeout:(NSTimer *)timer
+{
+  NSLog(@"Single location timeout, best accuracy = %f", self.singleLocation.horizontalAccuracy);
+  [self fireSingleLocationCallback];
+}
+
+- (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy withTimeout:(NSTimeInterval)timeout
 {
   self.singleLocationCallback = callback;
   self.singleLocationAccuracy = accuracy;
+  if (self.singleLocationTimer) {
+    [self.singleLocationTimer invalidate];
+    self.singleLocationTimer = nil;
+  }
+  self.singleLocationTimer = [NSTimer scheduledTimerWithTimeInterval:timeout
+                                                              target:self
+                                                            selector:@selector(singleLocationTimeout:)
+                                                            userInfo:nil
+                                                             repeats:NO];
   [self startUpdatingLocation];
 }
 

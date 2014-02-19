@@ -21,7 +21,7 @@ typedef void (^LocationBlock)(CLLocation *location);
 
 @property id<BUSLocationServiceDelegate> delegate;
 
-- (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy;
+- (void)getCurrentLocation:(LocationBlock)callback withAccuracy:(double)accuracy withTimeout:(NSTimeInterval)timeout;
 
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
