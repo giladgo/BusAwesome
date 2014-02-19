@@ -176,7 +176,7 @@
 {
   float myProjection = [self.trip projectPoint:coord.latitude lon:coord.longitude];
   
-  StopHighlight *highlight = [[StopHighlight alloc] init];
+  StopHighlight *highlight = [StopHighlight new];
   // if we are too close to either stations, highlight it only
   if (fabsf(prevStop.projectionOnTrip - myProjection) < CLOSE_ENOUGH_TO_STOP ) {
     highlight.stop1 = [self indexPathOfStop:prevStop];
@@ -268,20 +268,20 @@ BOOL highlightDiff(StopHighlight *h1, StopHighlight *h2) {
 {
   if (highlightDiff(highlight, _highlight)) {
     
-    StopHighlight *oldHiglight = _highlight;
+    StopHighlight *oldHighlight = _highlight;
     _highlight = highlight;
 
     if ([self.tableView numberOfRowsInSection:0]) {
       [self.tableView beginUpdates];
       
       NSMutableArray *indexesToUpdate = [NSMutableArray new];
-      if (oldHiglight) {
-        [indexesToUpdate addObject:oldHiglight.stop1];
+      if (oldHighlight) {
+        [indexesToUpdate addObject:oldHighlight.stop1];
       }
       [indexesToUpdate addObject:_highlight.stop1];
       
-      if (oldHiglight && oldHiglight.stop2Higlighted) {
-        [indexesToUpdate addObject:oldHiglight.stop2];
+      if (oldHighlight && oldHighlight.stop2Higlighted) {
+        [indexesToUpdate addObject:oldHighlight.stop2];
       }
       if (_highlight.stop2Higlighted) {
         [indexesToUpdate addObject:_highlight.stop2];
@@ -392,10 +392,9 @@ BOOL highlightDiff(StopHighlight *h1, StopHighlight *h2) {
   return [[BUSTripSectionHeader alloc] initWithCityName:cityName];
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-  return 21;
+  return TRIP_SECTION_HEADER_HEIGHT;
 }
 
 

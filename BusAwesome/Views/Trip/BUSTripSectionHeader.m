@@ -7,6 +7,7 @@
 //
 
 #import "BUSTripSectionHeader.h"
+#import <HexColors/HexColor.h>
 
 @interface BUSTripSectionHeader()
 @property (weak, nonatomic) IBOutlet UILabel *cityName;
@@ -16,7 +17,7 @@
 
 + (CAGradientLayer*) blueGradient {
   
-  UIColor *colorOne = [UIColor colorWithRed:(70/255.0) green:(180/255.0) blue:(255/255.0) alpha:1.0];
+  UIColor *colorOne = [UIColor colorWith8BitRed:70 green:180 blue:255 alpha:1.0];
   UIColor *colorTwo = [UIColor whiteColor];
   
   NSArray *colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, colorTwo.CGColor, nil];
@@ -35,7 +36,7 @@
 
 - (id) initWithCityName:(NSString *)cityName
 {
-  if (self = [super initWithFrame:CGRectMake(0, 0, 320, 21)]) {
+  if (self = [super initWithFrame:CGRectMake(0, 0, 320, TRIP_SECTION_HEADER_HEIGHT)]) {
     
     self.cityName.text = cityName;
     //[self.layer insertSublayer:[BUSTripSectionHeader blueGradient] atIndex:0];

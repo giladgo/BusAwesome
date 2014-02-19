@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "UIXibView.h"
 
+#define TRIP_SECTION_HEADER_HEIGHT 21
+
 @interface BUSTripSectionHeader : UIXibView
 
 - (id) initWithCityName:(NSString *)cityName;
