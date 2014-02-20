@@ -196,8 +196,6 @@
     highlight.stop2 = [self indexPathOfStop:afterStop];
     highlight.stop2Higlighted = YES;
   }
-  
-  NSLog(@"Setting highlight to %@", highlight);
 
   self.highlight = highlight;
 }
@@ -322,8 +320,6 @@ BOOL highlightDiff(StopHighlight *h1, StopHighlight *h2) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  NSUInteger count = ((NSArray*)self.stopsBySection[section]).count;
-  NSLog(@"#Stops for section %d : %d", (unsigned int)section, (unsigned int)count);
   return ((NSArray*)self.stopsBySection[section]).count;
 }
 
