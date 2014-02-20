@@ -36,7 +36,6 @@
 		946FD0A618268EC100ADD588 /* IICSimulatedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */; };
 		946FD0A818269DFC00ADD588 /* bus61.kml in Resources */ = {isa = PBXBuildFile; fileRef = 946FD0A718269DFC00ADD588 /* bus61.kml */; };
 		947C9D5F1821453C00C7B008 /* BUSStop+TripProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */; };
-		9492C32C18B2217F00968246 /* cities.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 9492C32B18B2217F00968246 /* cities.sqlite */; };
 		9492C33418B34E7000968246 /* TripSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9492C33318B34E7000968246 /* TripSectionHeader.xib */; };
 		9492C33718B3504700968246 /* BUSTripSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9492C33618B3504700968246 /* BUSTripSectionHeader.m */; };
 		94B0441A181FF7A200D3E15B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B04419181FF7A200D3E15B /* Foundation.framework */; };
@@ -119,7 +118,6 @@
 		946FD0A718269DFC00ADD588 /* bus61.kml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = bus61.kml; path = Resources/bus61.kml; sourceTree = "<group>"; };
 		947C9D5D1821453C00C7B008 /* BUSStop+TripProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "BUSStop+TripProjection.h"; path = "Models/BUSStop+TripProjection.h"; sourceTree = "<group>"; };
 		947C9D5E1821453C00C7B008 /* BUSStop+TripProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "BUSStop+TripProjection.m"; path = "Models/BUSStop+TripProjection.m"; sourceTree = "<group>"; };
-		9492C32B18B2217F00968246 /* cities.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = cities.sqlite; sourceTree = "<group>"; };
 		9492C33318B34E7000968246 /* TripSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TripSectionHeader.xib; path = Views/Trip/TripSectionHeader.xib; sourceTree = "<group>"; };
 		9492C33518B3504700968246 /* BUSTripSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSTripSectionHeader.h; path = Views/Trip/BUSTripSectionHeader.h; sourceTree = "<group>"; };
 		9492C33618B3504700968246 /* BUSTripSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTripSectionHeader.m; path = Views/Trip/BUSTripSectionHeader.m; sourceTree = "<group>"; };
@@ -285,7 +283,6 @@
 		9492C32A18B2217F00968246 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				9492C32B18B2217F00968246 /* cities.sqlite */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -529,7 +526,6 @@
 			files = (
 				94B04432181FF7A200D3E15B /* Images.xcassets in Resources */,
 				9439AE37182A47B10000A2C6 /* iTunesArtwork.png in Resources */,
-				9492C32C18B2217F00968246 /* cities.sqlite in Resources */,
 				9492C33418B34E7000968246 /* TripSectionHeader.xib in Resources */,
 				94F8719118210A6800911620 /* Trip.storyboard in Resources */,
 				9439AE2F182A47B10000A2C6 /* AppIcon29x29.png in Resources */,

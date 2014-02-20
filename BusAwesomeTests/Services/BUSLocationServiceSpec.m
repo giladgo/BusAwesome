@@ -33,7 +33,7 @@ describe(@"BusLocationService", ^{
       __block CLLocation *_location;
       [subject getCurrentLocation:^(CLLocation *location) {
         _location = location;
-      } withAccuracy:10.0];
+      } withAccuracy:10.0 withTimeout:3.5];
       [[expectFutureValue(theValue(_location)) shouldEventuallyBeforeTimingOutAfter(3.5)] beNonNil];
     });
     
@@ -41,7 +41,7 @@ describe(@"BusLocationService", ^{
       __block CLLocation *_location;
       [subject getCurrentLocation:^(CLLocation *location) {
         _location = location;
-      } withAccuracy:0.1];
+      } withAccuracy:0.1 withTimeout:3.5];
       [[expectFutureValue(theValue(_location)) shouldEventuallyBeforeTimingOutAfter(3.0)] beNonNil];
     });
     
