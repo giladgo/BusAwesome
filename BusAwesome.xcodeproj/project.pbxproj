@@ -32,6 +32,10 @@
 		9439AE38182A47B10000A2C6 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9439AE2E182A47B10000A2C6 /* iTunesArtwork@2x.png */; };
 		9439AE3A182A4B6E0000A2C6 /* bus161.kml in Resources */ = {isa = PBXBuildFile; fileRef = 9439AE39182A4B6E0000A2C6 /* bus161.kml */; };
 		9439AE3D182A689D0000A2C6 /* BUSLocationServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 9439AE3C182A689D0000A2C6 /* BUSLocationServiceSpec.m */; };
+		946E308B18B62DC800394D73 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 946E308918B62DC800394D73 /* DataModel.xcdatamodeld */; };
+		946E309418B62E9C00394D73 /* BUSTripHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 946E309318B62E9C00394D73 /* BUSTripHistory.m */; };
+		946E309718B62EE800394D73 /* BUSTripHistoryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946E309618B62EE800394D73 /* BUSTripHistoryService.m */; };
+		946E309918B636C400394D73 /* BUSTripHistoryServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 946E309818B636C400394D73 /* BUSTripHistoryServiceSpec.m */; };
 		946FD0981826513E00ADD588 /* BUSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0971826513E00ADD588 /* BUSLocationService.m */; };
 		946FD0A618268EC100ADD588 /* IICSimulatedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */; };
 		946FD0A818269DFC00ADD588 /* bus61.kml in Resources */ = {isa = PBXBuildFile; fileRef = 946FD0A718269DFC00ADD588 /* bus61.kml */; };
@@ -111,6 +115,12 @@
 		9439AE2E182A47B10000A2C6 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "BusAwesome/Resources/AppIcons/iTunesArtwork@2x.png"; sourceTree = SOURCE_ROOT; };
 		9439AE39182A4B6E0000A2C6 /* bus161.kml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = bus161.kml; path = Resources/bus161.kml; sourceTree = "<group>"; };
 		9439AE3C182A689D0000A2C6 /* BUSLocationServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSLocationServiceSpec.m; path = Services/BUSLocationServiceSpec.m; sourceTree = "<group>"; };
+		946E308A18B62DC800394D73 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		946E309218B62E9C00394D73 /* BUSTripHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSTripHistory.h; path = Models/BUSTripHistory.h; sourceTree = "<group>"; };
+		946E309318B62E9C00394D73 /* BUSTripHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTripHistory.m; path = Models/BUSTripHistory.m; sourceTree = "<group>"; };
+		946E309518B62EE800394D73 /* BUSTripHistoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSTripHistoryService.h; path = Services/BUSTripHistoryService.h; sourceTree = "<group>"; };
+		946E309618B62EE800394D73 /* BUSTripHistoryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTripHistoryService.m; path = Services/BUSTripHistoryService.m; sourceTree = "<group>"; };
+		946E309818B636C400394D73 /* BUSTripHistoryServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTripHistoryServiceSpec.m; path = Services/BUSTripHistoryServiceSpec.m; sourceTree = "<group>"; };
 		946FD0961826513E00ADD588 /* BUSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUSLocationService.h; sourceTree = "<group>"; };
 		946FD0971826513E00ADD588 /* BUSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BUSLocationService.m; sourceTree = "<group>"; };
 		946FD0A418268EC100ADD588 /* IICSimulatedLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IICSimulatedLocationManager.h; path = Lib/IICSimulatedLocationManager.h; sourceTree = "<group>"; };
@@ -188,6 +198,8 @@
 		6631186318210DE600993AF6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				946E309218B62E9C00394D73 /* BUSTripHistory.h */,
+				946E309318B62E9C00394D73 /* BUSTripHistory.m */,
 				6631186418210E1200993AF6 /* BUSTrip.h */,
 				6631186518210E1200993AF6 /* BUSTrip.m */,
 				6631186718210E3D00993AF6 /* BUSRoute.h */,
@@ -211,6 +223,8 @@
 				6631187518211EC500993AF6 /* BUSGTFSService.m */,
 				946FD0961826513E00ADD588 /* BUSLocationService.h */,
 				946FD0971826513E00ADD588 /* BUSLocationService.m */,
+				946E309518B62EE800394D73 /* BUSTripHistoryService.h */,
+				946E309618B62EE800394D73 /* BUSTripHistoryService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -265,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				9439AE3C182A689D0000A2C6 /* BUSLocationServiceSpec.m */,
+				946E309818B636C400394D73 /* BUSTripHistoryServiceSpec.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -342,6 +357,7 @@
 				94B04429181FF7A200D3E15B /* BUSAppDelegate.m */,
 				94B04431181FF7A200D3E15B /* Images.xcassets */,
 				94B04420181FF7A200D3E15B /* Supporting Files */,
+				946E308918B62DC800394D73 /* DataModel.xcdatamodeld */,
 			);
 			path = BusAwesome;
 			sourceTree = "<group>";
@@ -631,11 +647,14 @@
 				94B04426181FF7A200D3E15B /* main.m in Sources */,
 				6631186618210E1200993AF6 /* BUSTrip.m in Sources */,
 				6631186918210E3D00993AF6 /* BUSRoute.m in Sources */,
+				946E309718B62EE800394D73 /* BUSTripHistoryService.m in Sources */,
+				946E309418B62E9C00394D73 /* BUSTripHistory.m in Sources */,
 				94B0442A181FF7A200D3E15B /* BUSAppDelegate.m in Sources */,
 				94F8717F1820066F00911620 /* UIViewController+IICNavigator.m in Sources */,
 				946FD0981826513E00ADD588 /* BUSLocationService.m in Sources */,
 				6631187618211EC500993AF6 /* BUSGTFSService.m in Sources */,
 				6631187218210E8000993AF6 /* BUSPath.m in Sources */,
+				946E308B18B62DC800394D73 /* DataModel.xcdatamodeld in Sources */,
 				94F8719418210C2A00911620 /* BUSStopCell.m in Sources */,
 				947C9D5F1821453C00C7B008 /* BUSStop+TripProjection.m in Sources */,
 				94F871851820077E00911620 /* BUSRouteListVC.m in Sources */,
@@ -655,6 +674,7 @@
 			files = (
 				9439AE3D182A689D0000A2C6 /* BUSLocationServiceSpec.m in Sources */,
 				663CF74A18293486006A79D2 /* BUSRouteListVCSpec.m in Sources */,
+				946E309918B636C400394D73 /* BUSTripHistoryServiceSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -877,6 +897,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		946E308918B62DC800394D73 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				946E308A18B62DC800394D73 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 946E308A18B62DC800394D73 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 94B0440E181FF7A200D3E15B /* Project object */;
 }

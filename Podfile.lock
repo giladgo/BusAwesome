@@ -9,6 +9,9 @@ PODS:
   - Kiwi/XCTest (2.2.3):
     - Kiwi/ARC
     - Kiwi/NonARC
+  - MagicalRecord (2.2):
+    - MagicalRecord/Core
+  - MagicalRecord/Core (2.2)
   - MBProgressHUD (0.8)
   - objective-zip (0.0.1)
   - PonyDebugger (0.3.1):
@@ -48,6 +51,7 @@ PODS:
 DEPENDENCIES:
   - HexColors
   - Kiwi/XCTest
+  - MagicalRecord
   - MBProgressHUD
   - PonyDebugger (~> 0.3.1)
   - RestKit
@@ -61,6 +65,7 @@ SPEC CHECKSUMS:
   HexColors: 3a68db077cd6572a8f7d4aa1add284dd2436a934
   ISO8601DateFormatterValueTransformer: d0af1f50a9df42db72d7418db31938b8473e0af8
   Kiwi: 04c51e880831d291748ec702d42c4101f7eb95c9
+  MagicalRecord: 95d49d74ef752cd52f6ad87bcb474817fc3978cf
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
   objective-zip: 36c878cd9831e1cef61a23d61081b3af1334fb6b
   PonyDebugger: d31607145d785b2315cd6f6a4ebaa378eb0c1340
