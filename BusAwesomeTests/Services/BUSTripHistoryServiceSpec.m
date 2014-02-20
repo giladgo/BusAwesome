@@ -15,26 +15,49 @@ SPEC_BEGIN(BUSTripHistoryServiceSpec)
 
 describe(@"BUSTripHistoryServiceSpec", ^{
   
+  __block BUSTrip *mockTrip;
+  
+  beforeAll(^{
+    mockTrip = [BUSTrip new];
+    mockTrip.destination = @"HOME";
+    mockTrip.route = [BUSRoute new];
+    mockTrip.route.shortName = @"61";
+    mockTrip.Id = @"ABCDEFG";
+  });
+  
   beforeEach(^{
     [BUSTripHistoryService clear];
   });
   
   it(@"should hit a trip history successfully", ^{
-    BUSTrip *trip = [BUSTrip new];
-    trip.Id = @"ABCD";
-    [BUSTripHistoryService hitTrip:trip];
+    [BUSTripHistoryService hitTrip:mockTrip];
   });
   
   it(@"should get a visited trip successfully", ^{
-    BUSTrip *trip = [BUSTrip new];
-    trip.Id = @"ABCD";
-    [BUSTripHistoryService hitTrip:trip];
+    [BUSTripHistoryService hitTrip:mockTrip];
     
     NSArray *trips = [BUSTripHistoryService getTripHistory];
     BUSTripHistory *tripFromStore = [trips firstObject];
     
-    [[tripFromStore.tripId should] equal:trip.Id];
+    [[tripFromStore.directionDescription should] equal:mockTrip.destination];
+    [[tripFromStore.routeName should] equal:mockTrip.route.shortName];
   });
+  
+  it(@"should return only one trip after hitting the same trip twice", ^{
+    [BUSTripHistoryService hitTrip:mockTrip];
+    [NSThread sleepForTimeInterval:1];
+    [BUSTripHistoryService hitTrip:mockTrip];
+    
+    NSArray *trips = [BUSTripHistoryService getTripHistory];
+    
+    [[theValue(trips.count) should] equal:@(1)];
+    
+    BUSTripHistory *tripFromStore = [trips firstObject];
+    
+    [[tripFromStore.directionDescription should] equal:mockTrip.destination];
+    [[tripFromStore.routeName should] equal:mockTrip.route.shortName];
+  });
+  
 });
 
 SPEC_END

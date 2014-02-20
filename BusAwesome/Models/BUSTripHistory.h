@@ -14,5 +14,7 @@
 
 @property (nonatomic, retain) NSString * tripId;
 @property (nonatomic, retain) NSDate * hitTime;
+@property (nonatomic, retain) NSString * routeName;
+@property (nonatomic, retain) NSString * directionDescription;
 
 @end

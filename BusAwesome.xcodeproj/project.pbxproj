@@ -36,6 +36,7 @@
 		946E309418B62E9C00394D73 /* BUSTripHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 946E309318B62E9C00394D73 /* BUSTripHistory.m */; };
 		946E309718B62EE800394D73 /* BUSTripHistoryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946E309618B62EE800394D73 /* BUSTripHistoryService.m */; };
 		946E309918B636C400394D73 /* BUSTripHistoryServiceSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 946E309818B636C400394D73 /* BUSTripHistoryServiceSpec.m */; };
+		946E309F18B65BE500394D73 /* ManualRoute.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946E309E18B65BE500394D73 /* ManualRoute.storyboard */; };
 		946FD0981826513E00ADD588 /* BUSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0971826513E00ADD588 /* BUSLocationService.m */; };
 		946FD0A618268EC100ADD588 /* IICSimulatedLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 946FD0A518268EC100ADD588 /* IICSimulatedLocationManager.m */; };
 		946FD0A818269DFC00ADD588 /* bus61.kml in Resources */ = {isa = PBXBuildFile; fileRef = 946FD0A718269DFC00ADD588 /* bus61.kml */; };
@@ -121,6 +122,7 @@
 		946E309518B62EE800394D73 /* BUSTripHistoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BUSTripHistoryService.h; path = Services/BUSTripHistoryService.h; sourceTree = "<group>"; };
 		946E309618B62EE800394D73 /* BUSTripHistoryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTripHistoryService.m; path = Services/BUSTripHistoryService.m; sourceTree = "<group>"; };
 		946E309818B636C400394D73 /* BUSTripHistoryServiceSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BUSTripHistoryServiceSpec.m; path = Services/BUSTripHistoryServiceSpec.m; sourceTree = "<group>"; };
+		946E309E18B65BE500394D73 /* ManualRoute.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ManualRoute.storyboard; path = Views/RouteList/ManualRoute.storyboard; sourceTree = "<group>"; };
 		946FD0961826513E00ADD588 /* BUSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUSLocationService.h; sourceTree = "<group>"; };
 		946FD0971826513E00ADD588 /* BUSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BUSLocationService.m; sourceTree = "<group>"; };
 		946FD0A418268EC100ADD588 /* IICSimulatedLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IICSimulatedLocationManager.h; path = Lib/IICSimulatedLocationManager.h; sourceTree = "<group>"; };
@@ -295,6 +297,14 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		946E309D18B65BC300394D73 /* ManualRoute */ = {
+			isa = PBXGroup;
+			children = (
+				946E309E18B65BE500394D73 /* ManualRoute.storyboard */,
+			);
+			name = ManualRoute;
+			sourceTree = "<group>";
+		};
 		9492C32A18B2217F00968246 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +417,7 @@
 		94F871771820063300911620 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				946E309D18B65BC300394D73 /* ManualRoute */,
 				94F871821820074600911620 /* RouteList */,
 				94F8718A182109C400911620 /* Trip */,
 			);
@@ -559,6 +570,7 @@
 				94F871791820065800911620 /* Top.storyboard in Resources */,
 				9439AE33182A47B10000A2C6 /* AppIcon60x60.png in Resources */,
 				946FD0A818269DFC00ADD588 /* bus61.kml in Resources */,
+				946E309F18B65BE500394D73 /* ManualRoute.storyboard in Resources */,
 				9439AE3A182A4B6E0000A2C6 /* bus161.kml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

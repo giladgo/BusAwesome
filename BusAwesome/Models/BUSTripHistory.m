@@ -13,5 +13,7 @@
 
 @dynamic tripId;
 @dynamic hitTime;
+@dynamic routeName;
+@dynamic directionDescription;
 
 @end

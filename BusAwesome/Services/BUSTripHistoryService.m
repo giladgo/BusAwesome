@@ -14,14 +14,21 @@
 
 + (void) hitTrip:(BUSTrip *)trip
 {
+  // TODO: What about Halufut?
   NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-  BUSTripHistory *history = [BUSTripHistory MR_findFirstByAttribute:@"tripId" withValue:trip.Id inContext:context];
+  BUSTripHistory *history = [BUSTripHistory MR_findFirstWithPredicate: [NSPredicate predicateWithFormat:@"routeName == %@ AND directionDescription == %@",
+                                                                        trip.route.shortName,
+                                                                        trip.destination]
+                                                            inContext:context];
   if (!history) {
     history = [BUSTripHistory MR_createInContext:context];
   }
   
   history.hitTime = [NSDate date];
   history.tripId = trip.Id;
+  history.routeName = trip.route.shortName;
+  history.directionDescription = trip.destination;
+  
   [context MR_saveToPersistentStoreAndWait];
 }
 
